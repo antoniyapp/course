@@ -1,0 +1,32 @@
+{
+  "name": "course-js-shop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antoniyapp/course-js-shop.git"
+  },
+  "keywords": [
+    "express",
+    "mongoose"
+  ],
+  "author": "AP PK",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/antoniyapp/course-js-shop/issues"
+  },
+  "homepage": "https://github.com/antoniyapp/course-js-shop#readme",
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongodb": "^3.0.10",
+    "mongoose": "^5.1.3"
+  }
+}
