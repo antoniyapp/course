@@ -2,8 +2,8 @@ const Product = require("../models/product");
 
 const getProducts = async (req, res)  => {
   try {
-    const posts = await Product.find({});
-    res.status(200).send(posts);
+    const products = await Product.find({});
+    res.status(200).send(products);
   } catch (err) {
     return res.status(400).send({err: err.toString()});
   }
@@ -31,7 +31,7 @@ const getProduct = async (req, res) => {
       return res.status(404).send({message: "Product not found!"});
     }
 
-    res.status(200).send(post);
+    res.status(200).send(product);
   } catch (err) {
     return res.status(400).send({err: err.toString()});
   }
@@ -51,7 +51,7 @@ const updateProduct = async (req, res) => {
       return res.status(404).send({message: "Product not found!"});
     }
 
-    res.status(200).send(post);
+    res.status(200).send(product);
   } catch (err) {
     return res.status(400).send({err: err.toString()});
   }
