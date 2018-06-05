@@ -1,0 +1,80 @@
+const Product = require("../models/product");
+
+const getProducts = async (req, res)  => {
+  try {
+    const posts = await Product.find({});
+    res.status(200).send(posts);
+  } catch (err) {
+    return res.status(400).send({err: err.toString()});
+  }
+}
+
+const createProduct = async (req, res) => {
+  try {
+    let product = new Product(req.body);
+    product = await product.save();
+
+    res
+      .status(201)
+      .location(`/api/products/${product._id}`)
+      .send();
+  } catch (err) {
+    return res.status(400).send({err: err.toString()});
+  }
+};
+
+const getProduct = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.productId);
+
+    if (!product) {
+      return res.status(404).send({message: "Product not found!"});
+    }
+
+    res.status(200).send(post);
+  } catch (err) {
+    return res.status(400).send({err: err.toString()});
+  }
+};
+
+const updateProduct = async (req, res) => {
+  try {
+    const {title, imagePath, description,price} = req.body;
+
+    const product = await Product.findByIdAndUpdate(
+      req.params.productId,
+      {$set: {title, imagePath, description, price}},
+      {new: true, runValidators: true}
+    );
+
+    if (!product) {
+      return res.status(404).send({message: "Product not found!"});
+    }
+
+    res.status(200).send(post);
+  } catch (err) {
+    return res.status(400).send({err: err.toString()});
+  }
+};
+
+const deleteProduct = async (req, res) => {
+  try {
+    const product = await Product.findByIdAndRemove(req.params.productId);
+
+    if (!product) {
+      return res.status(404).send({message: "Product not found!"});
+    }
+
+    res.status(204).send();
+  } catch (err) {
+    return res.status(400).send({err: err.toString()});
+  }
+};
+
+module.exports = {
+  getProducts,
+  createProduct,
+  getProduct,
+  updateProduct,
+  deleteProduct
+};
