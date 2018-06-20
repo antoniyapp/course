@@ -8,6 +8,6 @@ import OnlineShop from './app.js';
 
 ReactDOM.render(
     <Router>
-    <OnlineShop />
+    <OnlineShop url='http://localhost:3000/api/products'/>
     </Router> ,
 document.getElementById('root'));

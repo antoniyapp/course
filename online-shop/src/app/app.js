@@ -51,8 +51,8 @@ class OnlineShop extends Component {
         )
     }
 
-     handleProductSubmit(product) {
-        axios.post('/api/products', product)
+     handleProductSubmit(newProduct) {
+        axios.post(this.props.url, newProduct)
       .then(({ data: product }) => {
        this.setState(prevState => ({
       products: [
@@ -60,13 +60,13 @@ class OnlineShop extends Component {
         { 
           id: Date.now()+prevState.products.length,
           title:product.title,
-          imageUrl: product.url,
+          imagePath: product.url,
           description: product.description,
-          price:product.price
+          price:Number(product.price)
         }
       ],
        errors: undefined,
-      messages: `New post added: ${product.title}`,
+      messages: `New post added: ${newProduct.title}`,
       showMessages: true,
       showErrors: false
     }));

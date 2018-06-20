@@ -31,6 +31,12 @@ module.exports = webpackMerge(commonConfig, {
     publicPath: '/', // match the output `publicPath`
     // port: 3000,
     historyApiFallback: true, // HTML 5 History API support
-    stats: 'minimal', // Minimal statistics
+    stats: 'minimal', // Minimal statistics,
+     proxy: {
+        '/api/*': {
+            target: 'http://localhost:9000/',
+            secure: false
+        }
+    }
   }
 });

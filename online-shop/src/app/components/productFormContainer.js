@@ -7,7 +7,7 @@ class ProductFormContainer extends Component {
      super(props)
     this.state = {
     title: '',
-    imageUrl:'',
+    imagePath:'',
     description:'',
     price:''
   };
@@ -23,7 +23,7 @@ class ProductFormContainer extends Component {
      this.props.history.push('/');
      let product={
          title:this.state.title,
-         imageUrl:this.state.imageUrl,
+         imagePath:this.state.imagePath,
          description:this.state.description,
          price:this.state.price
      };
@@ -31,7 +31,6 @@ class ProductFormContainer extends Component {
 
    }
   render(){
-      console.log(this.state);
         return (
         <ProductForm
         handleInputChange={this.handleInputChange}

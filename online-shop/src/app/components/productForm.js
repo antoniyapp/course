@@ -33,8 +33,8 @@ const ProductForm = ({
               <br />
               <input
                 type="text"
-                name="imageUrl"
-                value={formState.imageUrl}
+                name="imagePath"
+                value={formState.imagePath}
                 onChange={handleInputChange}
                 placeholder="Image..."
               />
