@@ -8,16 +8,6 @@ const RegisterForm = ({ form, errors, msg, onSubmit, handleOnChange, handleOnBlu
             <div>
             <input
                 type='text'
-                placeholder='UserName'
-                value={form.user}
-                onChange={handleOnChange('user')}
-                onBlur={handleOnBlur.user}
-            />
-            <div className = {errors.user === '' ? 'nv' : 'err'}>{errors.user}</div>
-            </div>
-            <div>
-            <input
-                type='text'
                 placeholder='Email'
                 value={form.email}
                 onChange={handleOnChange('email')}
@@ -44,6 +34,33 @@ const RegisterForm = ({ form, errors, msg, onSubmit, handleOnChange, handleOnBlu
                 onBlur={handleOnBlur.passRepeat}
             />
             <div className = {errors.passRepeat === '' ? 'nv' : 'err'}>{errors.passRepeat}</div>
+            </div>
+            <div>
+            <input
+                type='text'
+                placeholder='fistname'
+                value={form.firstname}
+                onChange={handleOnChange('firstname')}
+                onBlur={handleOnBlur.firstname}
+            />
+            </div>
+            <div>
+            <input
+                type='text'
+                placeholder='lastname'
+                value={form.lastname}
+                onChange={handleOnChange('lastname')}
+                onBlur={handleOnBlur.lastname}
+            />
+            </div>
+             <div>
+            <input
+                type='text'
+                placeholder='phoneNumber'
+                value={form.phoneNumber}
+                onChange={handleOnChange('phoneNumber')}
+                onBlur={handleOnBlur.phoneNumber}
+            />
             </div>
             <div>
                 <button type='submit' > Register </button>

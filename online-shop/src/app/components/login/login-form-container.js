@@ -1,5 +1,6 @@
 import React from 'react';
 import LoginForm from './login-form.js';
+import axios from 'axios';
 
 
 class LoginFormContainer extends React.Component {
@@ -33,7 +34,7 @@ class LoginFormContainer extends React.Component {
     handleOnSubmit = (e) => {
         e.preventDefault();
         if (this.hasErrors()) return;
-        this.postUser();
+        this.postUser({email:this.state.email,password:this.state.passs});
         let msg = '';
         this.setState({ msg: msg });
     }
@@ -45,9 +46,25 @@ class LoginFormContainer extends React.Component {
         return (errs.userErr + errs.emailErr + errs.passErr + errs.passRepeatErr != '');
     };
 
-    postUser = () => {
+    postUser = (user) => {
+     axios.post('http://localhost:3000/api/users/login', user)
+      .then(({data}) => {
+      localStorage.setItem('token',data.token);
 
-    };
+    })
+       .catch((err) => {
+        if (err.response.data.errors) {
+          this.setState({
+            msg: err.response.data.errors.reduce((errs, err) => errs + ' ' + err.message, '')
+          });
+          console.error(this.props.url, err.response.data);
+        }
+      }
+      );
+    }
+
+     
+
 
     validateEmail = () => {
         let err = '';

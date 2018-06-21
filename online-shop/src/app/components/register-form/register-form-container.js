@@ -1,14 +1,18 @@
 import React from 'react';
 import RegisterForm from './register-form.js';
+import axios from 'axios';
 
 
 class RegisterFormContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: '',
             email: '',
             pass: '',
+            firstname:'',
+            lastname:'',
+            address:'',
+            phoneNumber:'',
             passRepeat: '',
             userErr: '',
             emailErr: '',
@@ -20,9 +24,9 @@ class RegisterFormContainer extends React.Component {
 
     render() {
         return (<RegisterForm
-            form = {{user: this.state.user, email: this.state.email, pass: this.state.pass, passRepeat: this.state.passRepeat} }
-            errors = {{user: this.state.userErr, email: this.state.emailErr, pass: this.state.passErr, passRepeat: this.state.passRepeatErr} }
-            handleOnBlur = {{user: this.validateUser, email: this.validateEmail, pass: this.validatePass, passRepeat: this.validatePassRepeat} }
+            form = {{ email: this.state.email, pass: this.state.pass, firstname:this.state.firstname ,lastname:this.state.lastname, address:this.state.address, phoneNumber:this.state.phoneNumber,passRepeat: this.state.passRepeat} }
+            errors = {{ email: this.state.emailErr, pass: this.state.passErr, passRepeat: this.state.passRepeatErr} }
+            handleOnBlur = {{ email: this.validateEmail, pass: this.validatePass, passRepeat: this.validatePassRepeat} }
             msg = {this.state.msg}
             handleOnChange = {this.handleOnChange}
             onSubmit = {this.handleOnSubmit} />);
@@ -36,13 +40,23 @@ class RegisterFormContainer extends React.Component {
     handleOnSubmit = (e) => {
         e.preventDefault();
         if (this.hasErrors()) return;
-        this.postUser();
         let msg = '';
         this.setState({ msg: msg });
+        let user={
+         email:this.state.email,
+         password:this.state.email,
+         type:'user',
+         firstname:this.state.firstname,
+         lastname:this.state.lastname,
+         address:this.state.address,
+         phoneNumber:this.state.phoneNumber
+     };
+      this.postUser(user);
+
     }
 
     hasErrors = () => {
-        this.validateUser();
+      //  this.validateUser();
         this.validateEmail();
         this.validatePass();
         this.validatePassRepeat();
@@ -50,16 +64,24 @@ class RegisterFormContainer extends React.Component {
         return (errs.userErr + errs.emailErr + errs.passErr + errs.passRepeatErr != '');
     };
 
-    postUser = () => {
+  postUser = (user) => {
+     axios.post('http://localhost:3000/api/users/', user)
+      .then(({data}) => {
+      localStorage.setItem('token',data.token);
+      
+       })
+       .catch((err) => {
+          console.error(this.props.url, err);
+        })
+      }
+      
 
-    };
-
-    validateUser = () => {
-        let err = ''
-        if(this.state.user === '') err = 'The user name is mandatory';
-        else if (this.state.user.length < 6) err = 'The user name must be at least 6 characters long';
-        this.setState({'userErr': err});
-    };
+    // validateUser = () => {
+    //     let err = ''
+    //     if(this.state.user === '') err = 'The user name is mandatory';
+    //     else if (this.state.e.length < 6) err = 'The user name must be at least 6 characters long';
+    //     this.setState({'userErr': err});
+    // };
 
 
     validateEmail = () => {
@@ -87,4 +109,4 @@ class RegisterFormContainer extends React.Component {
 
 };
 
-export default RegisterFormContainer
+export default RegisterFormContainer;
