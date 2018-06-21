@@ -6,7 +6,7 @@ function signToken(user) {
 	// toObject() returns a basic js object with only the info from the db
 	const userData = user.toObject();
 	delete userData.password;
-	return jwt.sign(userData, JWT_SECRET);
+	return jwt.sign(userData, JWT_SECRET,{ expiresIn: '1h' });
 }
 
 function verifyToken(req, res, next) {
