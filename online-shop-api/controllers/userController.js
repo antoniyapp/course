@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const signToken = require('../serverAuth.js').signToken;
 
 const getUsers = async (req, res) => {
   try {
@@ -14,11 +15,11 @@ const createUser = async (req, res) => {
   try {
     let user = new User(req.body);
     user = await user.save();
-
+    const token = signToken(user);
     res
       .status(201)
       .location(`/api/users/${user._id}`)
-      .send();
+      .json({success: true, message: "Token attached.", token})
   } catch (err) {
     return res.status(400).send({ err: err.toString() });
   }
@@ -45,4 +46,32 @@ const updateUser = async (req, res) => {
   }catch(err){
     return res.status(400).send({err: err.toString()});
   }
+}
+const loginUser = async (req,res) => {
+  try{
+     let userId = req.params.userId;
+      
+      // check if the user exists
+		const user = await User.findOne(userId, (err, user) => {
+			// if there's no user or the password is invalid
+			if(!user || !user.comparePassword(req.body.password)) {
+				// deny access
+				return res.json({success: false, message: "Invalid credentials."})
+			}
+
+			const token = signToken(user);
+			res.json({success: true, message: "Token attached.", token})
+		})
+  }
+  catch(err){
+    res.status(400).send({err:err.toString});
+  }
+}
+
+module.exports = {
+getUsers,
+createUser,
+getUser,
+updateUser,
+loginUser
 }

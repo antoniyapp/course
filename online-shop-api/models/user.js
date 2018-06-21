@@ -4,11 +4,6 @@ const SALT_WORK_FACTOR = 10;
 
 const UserSchema = new mongoose.Schema(
   {
-    username: {
-      type: String,
-      required: [true, "Username is mandatory"],
-      trim: true
-    },
     email: {
       type: String,
       required: [true, "Email is mandatory"],
@@ -37,7 +32,7 @@ const UserSchema = new mongoose.Schema(
       required: false,
       trim: true
     },
-    adress: {
+    address: {
       type: String,
       required: false,
       trim: true
@@ -50,7 +45,7 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
-UserSchema.pre(save, function (next) {
+UserSchema.pre("save", function (next) {
   var user = this;
 
   // only hash the password if it has been modified (or is new)
