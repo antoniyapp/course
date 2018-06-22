@@ -7,7 +7,8 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String,
       required: [true, "Email is mandatory"],
-      trim: true
+      trim: true,
+      unique:true
     },
     password: {
       type: String,
@@ -66,8 +67,8 @@ UserSchema.pre("save", function (next) {
   });
 });
 
-UserSchema.methods.comparePassword = function (candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
+UserSchema.methods.comparePassword = function (candidatePassword,userpassword, cb) {
+  bcrypt.compare(candidatePassword, userpassword, function (err, isMatch) {
     if (err) return cb(err);
     cb(null, isMatch);
   });

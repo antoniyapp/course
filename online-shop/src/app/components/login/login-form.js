@@ -2,8 +2,8 @@ import React from 'react';
 // import { withRouter } from 'react-router-dom';
 
 
-const LoginForm = ({ form, errors, msg, onSubmit, handleOnChange, handleOnBlur }) => (
-    <form onSubmit={(e) => { onSubmit(e); }}>
+const LoginForm = ({ form, errors, msg, handleOnSubmit, handleOnChange, handleOnBlur }) => (
+    <form onSubmit={(e) => { handleOnSubmit(e); }}>
         <div className='form-containter'>
             {/* <div>
             <input

@@ -12,4 +12,6 @@ router.put('/:userId',verifyToken, userController.updateUser);
 
 router.post('/login',userController.loginUser);
 
+router.post('/:userId',userController.removeUser);
+
 module.exports = router;

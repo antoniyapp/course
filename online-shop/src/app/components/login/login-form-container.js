@@ -13,6 +13,8 @@ class LoginFormContainer extends React.Component {
             passErr: '',
             msg: ''
         };
+        this.handleOnChange=this.handleOnChange.bind(this);
+        this.handleOnSubmit=this.handleOnSubmit.bind(this);
     }
 
     render() {
@@ -23,7 +25,7 @@ class LoginFormContainer extends React.Component {
             handleOnBlur = {{ email: this.validateEmail, pass: this.validatePass }}
             msg = {this.state.msg}
             handleOnChange = {this.handleOnChange}
-            onSubmit = {this.handleOnSubmit} />);
+            handleOnSubmit = {this.handleOnSubmit} />);
     }
 
     handleOnChange = (attribute) => {
@@ -33,10 +35,12 @@ class LoginFormContainer extends React.Component {
 
     handleOnSubmit = (e) => {
         e.preventDefault();
-        if (this.hasErrors()) return;
-        this.postUser({email:this.state.email,password:this.state.passs});
+       
+        //if (this.hasErrors()) return;
+        this.postUser({email:this.state.email,password:this.state.pass});
         let msg = '';
-        this.setState({ msg: msg });
+        this.setState({ msg: msg })
+        console.log("yes");
     }
 
     hasErrors = () => {
@@ -50,7 +54,8 @@ class LoginFormContainer extends React.Component {
      axios.post('http://localhost:3000/api/users/login', user)
       .then(({data}) => {
       localStorage.setItem('token',data.token);
-
+       this.props.history.push('/');
+      () => this.props.changeLoggedInStatus(true);
     })
        .catch((err) => {
         if (err.response.data.errors) {

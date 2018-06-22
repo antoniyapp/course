@@ -7,6 +7,7 @@ import { CSSTransition } from 'react-transition-group';
 import ProductFormContainer from './components/productFormContainer';
 import RegisterFormContainer from './components/register-form/register-form-container';
 import LoginFormContainer from './components/login/login-form-container';
+import Logout from './components/logout/logout'
 
 class OnlineShop extends Component {
     constructor(props){
@@ -17,20 +18,33 @@ class OnlineShop extends Component {
             messages: undefined,
             showMessages: false,
             showErrors: false,
-            isLogged: localStorage.getItem('token') !== 'undefined' 
+            isLogged: localStorage.getItem('token') !== 'undefined' && localStorage.getItem('token') !== null
         };
 
       this.handleProductSubmit=this.handleProductSubmit.bind(this);
+      this.handleLogout=this.handleLogout.bind(this);
+      this.changeLoggedInStatus=this.changeLoggedInStatus.bind(this);
     }
    
     render () {
-      console.log( this.state.isLogged)
+      
+      //   console.log(this.state.isLogged);
         return (
         <div>
           <div className="navbar-nav">
              {
-               localStorage.getItem('token')==='undefined' ? 
-             <nav className="navbar navbar-expand-lg navbar-light bg-light">
+               localStorage.getItem('token') !== 'undefined' && localStorage.getItem('token') !== null  ? 
+          
+           <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <ul id="main-menu">
+                <li className="nav-item"><Link to='/'>Home</Link></li>
+                <li className="nav-item"><Link to='/products'>All Products</Link></li>
+                <li className="nav-item" ><Link to='/cart'>Cart</Link></li>
+                <li className="nav-item" ><Link to='/logout'>Logout</Link></li>
+                </ul>
+                </nav> 
+                :
+                <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <ul id="main-menu">
                 <li className="nav-item"><Link to='/'>Home</Link></li>
                 <li className="nav-item"><Link to='/products'>All Products</Link></li>
@@ -39,21 +53,13 @@ class OnlineShop extends Component {
                 <li className="nav-item" ><Link to='/login'>Login</Link></li>
                 </ul>
            </nav>
-             
-          :
-           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <ul id="main-menu">
-                <li className="nav-item"><Link to='/'>Home</Link></li>
-                <li className="nav-item"><Link to='/products'>All Products</Link></li>
-                <li className="nav-item" ><Link to='/cart'>Cart</Link></li>
-                </ul>
-                </nav>
             
           }
               </div>
         <Route path="/create" render={props => (<ProductFormContainer {...props} handleProductSubmit = {this.handleProductSubmit} />)} />
-        <Route exact path="/register" render={() => ( this.state.isLogged ? ( <Redirect to="/"/>) : ( <RegisterFormContainer/>) )}/>
-        <Route exact path="/login" render={() => ( this.state.isLogged ? ( <Redirect to="/"/>) : ( <LoginFormContainer/>) )}/>
+        <Route exact path="/register" render={(props) => ( this.state.isLogged ? ( <Redirect to="/"/>) : ( <RegisterFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus}/>) )}/>
+        <Route exact path="/login" render={(props) => ( this.state.isLogged ? ( <Redirect to="/"/>) : ( <LoginFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus}/>) )}/>
+        <Route exact path="/logout"  render={props => (<Logout {...props} changeLoggedInStatus={this.state.changeLoggedInStatus} handleLogout = {this.handleLogout} />)} />
         
          <CSSTransition in={this.state.showErrors} timeout={1000} 
         unmountOnExit classNames="messages">
@@ -105,7 +111,14 @@ class OnlineShop extends Component {
       }
       );
     }
-
+  handleLogout(e){
+  e.preventDefault();
+   localStorage.removeItem("token");
+   this.changeLoggedInStatus(false);
+  }
+  changeLoggedInStatus(param){
+   this.setState({isLogged:param})
+  }
     
 }
 

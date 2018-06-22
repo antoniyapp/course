@@ -47,24 +47,46 @@ const updateUser = async (req, res) => {
     return res.status(400).send({err: err.toString()});
   }
 }
+
 const loginUser = async (req,res) => {
   try{
-     let userId = req.params.userId;
+     let userId = req.body.userId;
       
       // check if the user exists
 		const user = await User.findOne(userId, (err, user) => {
 			// if there's no user or the password is invalid
-			if(!user || !user.comparePassword(req.body.password)) {
-				// deny access
-				return res.json({success: false, message: "Invalid credentials."})
-			}
-
-			const token = signToken(user);
-			res.json({success: true, message: "Token attached.", token})
-		})
+			user.comparePassword(req.body.password,user.password,
+        function (err,isMatch) {
+          if(isMatch){
+	         const token = signToken(user);
+			     res.json({success: true, message: "Token attached.", token})
+          }
+          else if(err){
+            return res.json({success: false, message: "Invalid pass."})
+          }
+          else {
+            return res.json({success: false, message: "Invalid credentials."})
+          }
+        })})
+		
   }
   catch(err){
     res.status(400).send({err:err.toString});
+  }
+}
+ const removeUser = async (req, res) => {
+
+  try{
+     let userId = req.params.userId;
+     let user = await User.findByIdAndRemove(userId);
+     if (!user) {
+      return res.status(404);
+    } else {
+      //res.status(204).send('User successfully deleted');
+      res.send('removed');
+    }
+  }catch(err){
+    return res.status(400).send({err: err.toString()});
   }
 }
 
@@ -73,5 +95,6 @@ getUsers,
 createUser,
 getUser,
 updateUser,
-loginUser
+loginUser,
+removeUser
 }

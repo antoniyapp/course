@@ -68,11 +68,12 @@ class RegisterFormContainer extends React.Component {
      axios.post('http://localhost:3000/api/users/', user)
       .then(({data}) => {
       localStorage.setItem('token',data.token);
-      
+       this.props.history.push('/');
+         () => this.props.changeLoggedInStatus(true);
        })
        .catch((err) => {
           console.error(this.props.url, err);
-        })
+        });
       }
       
 
