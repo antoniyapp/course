@@ -24,13 +24,12 @@ const OrderSchema = new mongoose.Schema(
     },
     totalQuantity:{
         type : Number,
-        required:true,
-        min: [0, 'Total price cannot be less than 0'],
+        default: 0
     },
     totalPrice:{
         type: Number,
         required:true,
-        min: [0, 'Total price cannot be less than 0'],
+        default: 0,
     }
   }
 )
