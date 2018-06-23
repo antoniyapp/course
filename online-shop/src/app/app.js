@@ -65,7 +65,6 @@ class OnlineShop extends Component {
         <Route exact path="/login" render={(props) => ( this.state.isLogged ? ( <Redirect to="/"/>) : ( <LoginFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus}/>) )}/>
         <Route exact path="/logout"  render={props => (<Logout {...props} changeLoggedInStatus={this.state.changeLoggedInStatus} handleLogout = {this.handleLogout} />)} />
         <Route path = '/products' component={ProductListContainer}/>
-
         <Route exact path="/contact" component={ContactContainer}/>
 
          <CSSTransition in={this.state.showErrors} timeout={1000} 

@@ -18,7 +18,7 @@ class ProductListContainer extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            items: [{isHovering: false, _id: '1', price: 7, title: 'test', image: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' }],
+            items: [{ isHovering: false, _id: '1', price: 7, title: 'test', image: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' }],
             sort: '',
             curPage: 1,
             numPages: 1
@@ -29,32 +29,32 @@ class ProductListContainer extends React.Component {
         return (
             <div className='container'>
                 <div className='float-right'>
-                    {/* <Sorting.Component sort={this.state.sort} handleOnChange={this.handleOnChangeSort} urlSearchParams={Paging.defaultSearchParam}>
-                        {sortOptions.map(x => <option className='dropdown-item' key={x.value} value={x.value}>{x.text}</option>)}
-                    </Sorting.Component> */}
-
-                    <Sorting.Component 
-                    sort={this.state.sort}
-                    options={sortOptions} 
-                    urlSearchParams={Paging.defaultSearchParam} />
-
+                    <Sorting.Component
+                        sort={this.state.sort}
+                        options={sortOptions}
+                        urlSearchParams={Paging.defaultSearchParam} />
                 </div>
-                <ProductList items={this.filterItems()} toggleHoverState = {this.toggleHoverState} />
                 <div>
-                    <Paging.Component 
-                    curPage={this.state.curPage}
-                    numPages={this.state.numPages} />
+                    <ProductList items={this.filterItems()} toggleHoverState={this.toggleHoverState} />
+                </div>
+                <div>
+                    <Paging.Component
+                        curPage={this.state.curPage}
+                        numPages={this.state.numPages} />
                 </div>
             </div>);
     };
 
+    //list-item change state when hover over an item
     toggleHoverState = (id) => {
         return () => (
-        this.setState(prevState => (
-             {items: prevState.items.map(item => (item._id === id ? {...item, isHovering: !item.isHovering} : item))}
-        )));
-        };
+            this.setState(prevState => (
+                { items: prevState.items.map(item => (item._id === id ? { ...item, isHovering: !item.isHovering } : item)) }
+            )));
+    };
 
+    // get search params for paging and sort
+    // and and update the state with these values
     setStateSearch(location) {
         this.setState({
             curPage: Paging.getSearchParamValue(location.search),
@@ -62,6 +62,7 @@ class ProductListContainer extends React.Component {
         });
     };
 
+    // load products from the server and update the state (the items + numPages)
     loadProducts = () => {
         axios.get("/api/products"
             // ,{
@@ -70,7 +71,7 @@ class ProductListContainer extends React.Component {
         )
             .then((res) => {
                 this.setState({
-                    items: res.data.map(x => ({...x, isHovering: false })),
+                    items: res.data.map(x => ({ ...x, isHovering: false })),
                     numPages: Math.floor(res.data.length / itemsPerPage) + 1
                 });
             })
