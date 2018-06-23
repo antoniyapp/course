@@ -8,6 +8,7 @@ import ProductFormContainer from './components/productFormContainer';
 import RegisterFormContainer from './components/register-form/register-form-container';
 import LoginFormContainer from './components/login/login-form-container';
 import Logout from './components/logout/logout'
+import ContactContainer from './components/contact/contactContainer';
 
 import ProductListContainer from './components/product-list/product-list-container.js';
 
@@ -53,6 +54,7 @@ class OnlineShop extends Component {
                 <li className="nav-item" ><Link to='/cart'>Cart</Link></li>
                 <li className="nav-item" ><Link to='/register'>Register</Link></li>
                 <li className="nav-item" ><Link to='/login'>Login</Link></li>
+                <li className="nav-item" ><Link to='/contact'>Contact</Link></li>
                 </ul>
            </nav>
             
@@ -64,6 +66,7 @@ class OnlineShop extends Component {
         <Route exact path="/logout"  render={props => (<Logout {...props} changeLoggedInStatus={this.state.changeLoggedInStatus} handleLogout = {this.handleLogout} />)} />
         <Route path = '/products' component={ProductListContainer}/>
 
+        <Route exact path="/contact" component={ContactContainer}/>
 
          <CSSTransition in={this.state.showErrors} timeout={1000} 
         unmountOnExit classNames="messages">

@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const productRouter = require("./routes/productsRoutes");
 const userRouter = require("./routes/userRoutes");
 const orderRouter = require("./routes/ordersRoutes");
+const contactFormRouter = require("./routes/contactFormRoutes");
 
 mongoose.Promise = global.Promise;
 const mongooseUrl =
@@ -20,6 +21,7 @@ app.use(bodyParser.json());
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
+app.use("/api/contact", contactFormRouter);
 
 app.listen(9000, () => {
   console.log(`Server started on port 9000`);
