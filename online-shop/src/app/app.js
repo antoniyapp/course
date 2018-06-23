@@ -8,6 +8,7 @@ import ProductFormContainer from './components/productFormContainer';
 import RegisterFormContainer from './components/register-form/register-form-container';
 import LoginFormContainer from './components/login/login-form-container';
 import Logout from './components/logout/logout'
+import ContactContainer from './components/contact/contactContainer';
 
 class OnlineShop extends Component {
     constructor(props){
@@ -51,6 +52,7 @@ class OnlineShop extends Component {
                 <li className="nav-item" ><Link to='/cart'>Cart</Link></li>
                 <li className="nav-item" ><Link to='/register'>Register</Link></li>
                 <li className="nav-item" ><Link to='/login'>Login</Link></li>
+                <li className="nav-item" ><Link to='/contact'>Contact</Link></li>
                 </ul>
            </nav>
             
@@ -60,7 +62,8 @@ class OnlineShop extends Component {
         <Route exact path="/register" render={(props) => ( this.state.isLogged ? ( <Redirect to="/"/>) : ( <RegisterFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus}/>) )}/>
         <Route exact path="/login" render={(props) => ( this.state.isLogged ? ( <Redirect to="/"/>) : ( <LoginFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus}/>) )}/>
         <Route exact path="/logout"  render={props => (<Logout {...props} changeLoggedInStatus={this.state.changeLoggedInStatus} handleLogout = {this.handleLogout} />)} />
-        
+        <Route exact path="/contact" component={ContactContainer}/>
+
          <CSSTransition in={this.state.showErrors} timeout={1000} 
         unmountOnExit classNames="messages">
           <div>  
