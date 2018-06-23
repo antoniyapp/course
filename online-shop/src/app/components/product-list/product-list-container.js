@@ -1,87 +1,119 @@
 import React from 'react';
 import axios from 'axios';
-import queryString from 'query-string';
 
-import Paging from './paging.js';
-import Sorting from './sorting.js'; 
+import Paging from '../helpers/paging.js';
+import Sorting from '../helpers/sorting.js';
 import ProductList from './product-list.js';
 
-const sortParams = [
-    {value: 'pa', text: 'Price: lowest first'},
-    {value: 'pd', text: 'Price: highest first'},
-    {value: 'dd', text: 'Date: Latest first'},
-    {value: 'da', text: 'Date: Oldest first'}
+const sortOptions = [
+    { value: 'pa', key: 'Price: Lowest first' },
+    { value: 'pd', key: 'Price: Highest first' },
+    { value: 'dd', key: 'Date: Latest first' },
+    { value: 'da', key: 'Date: Oldest first' }
 ];
 
-class ProductListContainer extends React.Component{
-    constructor(props){
+const itemsPerPage = 4;
+
+class ProductListContainer extends React.Component {
+    constructor(props) {
         super(props)
         this.state = {
-            items: [],
+            items: [{isHovering: false, _id: '1', price: 7, title: 'test', image: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' }],
             sort: '',
             curPage: 1,
-            numPages: 700}
+            numPages: 1
+        }
     };
 
     render() {
-        return( 
-        <div>
-        <Sorting sort = {this.state.sort} handleOnChange = {this.handleOnChangeSort}>
-        {sortParams.map(x => <option key = {x.value} value={x.value}>{x.text}</option>)}
-        </Sorting>
-        <ProductList items = {this.state.items}/>
-        <Paging curPage = {this.state.curPage} numPages = {this.state.numPages}/>
-        </div>);
+        return (
+            <div className='container'>
+                <div className='float-right'>
+                    {/* <Sorting.Component sort={this.state.sort} handleOnChange={this.handleOnChangeSort} urlSearchParams={Paging.defaultSearchParam}>
+                        {sortOptions.map(x => <option className='dropdown-item' key={x.value} value={x.value}>{x.text}</option>)}
+                    </Sorting.Component> */}
+
+                    <Sorting.Component 
+                    sort={this.state.sort}
+                    options={sortOptions} 
+                    urlSearchParams={Paging.defaultSearchParam} />
+
+                </div>
+                <ProductList items={this.filterItems()} toggleHoverState = {this.toggleHoverState} />
+                <div>
+                    <Paging.Component 
+                    curPage={this.state.curPage}
+                    numPages={this.state.numPages} />
+                </div>
+            </div>);
     };
 
-    // loadCommentsFromServer = () => {
-    //     axios.get("/api/products",{
-    //         sort: this.state.sort,
-    //         page: this.state.curPage
-    //     })
-    //         .then(({ data: posts }) => {
-    //             // console.log("GET" , comments);
-    //             this.setState({
-    //                 blogPosts: posts.reverse()
-    //             });
-    //         })
-    //         .catch((err) => {
-    //             if (err.response.data.errors) {
-    //                 console.error("/api/posts", err.response.data);
-    //             }
-    //         });
-    // }
+    toggleHoverState = (id) => {
+        return () => (
+        this.setState(prevState => (
+             {items: prevState.items.map(item => (item._id === id ? {...item, isHovering: !item.isHovering} : item))}
+        )));
+        };
 
-    handleOnChangeSort = (e) => {
-        this.setState({sort: e.target.value});
-    }
+    setStateSearch(location) {
+        this.setState({
+            curPage: Paging.getSearchParamValue(location.search),
+            sort: Sorting.getSearchParamValue(location.search, sortOptions.map(x => x.value))
+        });
+    };
 
-    getPageSearch(){
-        let page = parseInt(queryString.parse(this.props.location.search).p);
-        if(!page || page<1 || page > this.state.numPages) return 1;
-        return page;
-    }
-
-    getSortSearch(){
-        let sort = queryString.parse(this.props.location.search).s;
-        if(sortParams.filter(x => x.value === sort) === []) return "";
-        return sort;
-    }
-
-    setStateSearch(){
-        this.setState({curPage: this.getPageSearch(), sort: this.getSortSearch()});
-    }
-
-    componentDidUpdate(){
-
-        //this.setStateSearch();
-    }
+    loadProducts = () => {
+        axios.get("/api/products"
+            // ,{
+            //     sort: this.state.sort,
+            //     page: this.state.curPage}
+        )
+            .then((res) => {
+                this.setState({
+                    items: res.data.map(x => ({...x, isHovering: false })),
+                    numPages: Math.floor(res.data.length / itemsPerPage) + 1
+                });
+            })
+            .catch((err) => {
+                if (err.response.data.errors) {
+                    console.error("/api/products", err.response.data);
+                }
+            });
+    };
 
     componentDidMount() {
-        console.log(this.props.location);
-        this.setStateSearch();
+        this.setStateSearch(this.props.location);
+        this.loadProducts();
     };
-    
+
+    componentWillReceiveProps(nextProps) {
+        this.setStateSearch(nextProps.location);
+        this.loadProducts();
+    }
+
+    //to be deleted when back end supports paging and sortitng
+
+    filterItems = () => {
+
+        const sortFunction = (criteria) => {
+            switch (criteria) {
+                case 'pa': return (x, y) => (x.price >= y.price ? x : y);
+                    break;
+                case 'pd': return (x, y) => (x.price <= y.price ? x : y);
+                    break;
+                    // case 'dd' : return (x,y) => (x.price > y.price ? x : y);
+                    // break;
+                    // case 'da' : return (x,y) => (x.price > y.price ? x : y);
+                    break;
+                default: return undefined;
+            }
+        }
+
+        return this.state.items
+            .sort(sortFunction(this.state.sort))
+            .slice(itemsPerPage * (this.state.curPage - 1), itemsPerPage * this.state.curPage - 1);
+    };
+
 };
 
 export default ProductListContainer;

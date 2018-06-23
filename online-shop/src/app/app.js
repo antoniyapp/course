@@ -9,6 +9,8 @@ import RegisterFormContainer from './components/register-form/register-form-cont
 import LoginFormContainer from './components/login/login-form-container';
 import Logout from './components/logout/logout'
 
+import ProductListContainer from './components/product-list/product-list-container.js';
+
 class OnlineShop extends Component {
     constructor(props){
         super(props);
@@ -60,7 +62,9 @@ class OnlineShop extends Component {
         <Route exact path="/register" render={(props) => ( this.state.isLogged ? ( <Redirect to="/"/>) : ( <RegisterFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus}/>) )}/>
         <Route exact path="/login" render={(props) => ( this.state.isLogged ? ( <Redirect to="/"/>) : ( <LoginFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus}/>) )}/>
         <Route exact path="/logout"  render={props => (<Logout {...props} changeLoggedInStatus={this.state.changeLoggedInStatus} handleLogout = {this.handleLogout} />)} />
-        
+        <Route path = '/products' component={ProductListContainer}/>
+
+
          <CSSTransition in={this.state.showErrors} timeout={1000} 
         unmountOnExit classNames="messages">
           <div>  
