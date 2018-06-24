@@ -48,8 +48,8 @@ class CartContainer extends Component {
         <CartProductList
            items={cart.products}
          />  
-         Total quantity: {cart.totalQuantity}
-         Total price: {cart.totalPrice}
+         Total quantity: {cart.totalQuantity} <br/>
+         Total price: {cart.totalPrice}<br/>
          <button onSubmit={this.handleSubmit}>Submit</button>
          </div>  
         )
