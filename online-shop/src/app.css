@@ -1,0 +1,32 @@
+
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.liNav{
+    display: inline-block;
+    list-style: none;
+    width:10%;
+     text-align: center;
+}
+nav{
+   
+    font-size: 20px;
+    height:5em;
+    margin: 10px;
+    padding: 5px;
+    
+}
+.list-unstyled >a {
+  color:white;
+}
+footer{
+  flex: 1;
+}
+
+.html {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
