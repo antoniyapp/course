@@ -18,7 +18,7 @@ class ProductListContainer extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            items: [],
+            items: [{ isHovering: false, _id: '1', price: 7, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' }],
             sort: '',
             curPage: 1,
             numPages: 1

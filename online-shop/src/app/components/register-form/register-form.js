@@ -4,8 +4,15 @@ import React from 'react';
 
 const RegisterForm = ({ form, errors, msg, onSubmit, handleOnChange, handleOnBlur }) => (
     <form onSubmit={(e) => { onSubmit(e); }}>
+        <header>
+          <div className="wrapper">
+            <h1>Register </h1>
+          </div>
+        </header>
         <div className='form-containter'>
             <div>
+                 <br />
+              <label>Email </label>
             <input
                 type='text'
                 placeholder='Email'
@@ -15,7 +22,8 @@ const RegisterForm = ({ form, errors, msg, onSubmit, handleOnChange, handleOnBlu
             />
             <div className = {errors.email === '' ? 'nv' : 'err'}>{errors.email}</div>
             </div>
-            <div>
+            <div> <br />
+              <label>Password </label>
             <input
                 type='password'
                 placeholder='Password'
@@ -26,6 +34,8 @@ const RegisterForm = ({ form, errors, msg, onSubmit, handleOnChange, handleOnBlu
             <div className = {errors.pass === '' ? 'nv' : 'err'}>{errors.pass}</div>
             </div>
             <div>
+                 <br />
+              <label>Repeat Password </label>
             <input
                 type='password'
                 placeholder='Repeat Password'
@@ -36,6 +46,8 @@ const RegisterForm = ({ form, errors, msg, onSubmit, handleOnChange, handleOnBlu
             <div className = {errors.passRepeat === '' ? 'nv' : 'err'}>{errors.passRepeat}</div>
             </div>
             <div>
+                   <br />
+              <label>Fistname </label>
             <input
                 type='text'
                 placeholder='fistname'
@@ -45,6 +57,9 @@ const RegisterForm = ({ form, errors, msg, onSubmit, handleOnChange, handleOnBlu
             />
             </div>
             <div>
+                  <br />
+              <label>Lastname </label>
+        
             <input
                 type='text'
                 placeholder='lastname'
@@ -53,7 +68,10 @@ const RegisterForm = ({ form, errors, msg, onSubmit, handleOnChange, handleOnBlu
                 onBlur={handleOnBlur.lastname}
             />
             </div>
-             <div>
+             <div>  
+                  <br />
+              <label>Phone Number </label>
+              
             <input
                 type='text'
                 placeholder='phoneNumber'
@@ -63,7 +81,7 @@ const RegisterForm = ({ form, errors, msg, onSubmit, handleOnChange, handleOnBlu
             />
             </div>
             <div>
-                <button type='submit' > Register </button>
+                <button className="btn-primary" type='submit' > Register </button>
             </div>
         </div>
     </form>

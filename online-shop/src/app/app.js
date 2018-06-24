@@ -20,42 +20,69 @@ import ProductListContainer from './components/product-list/product-list-contain
 import OrderListContainer from './components/order-list/order-list-container.js';
 
 class OnlineShop extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      products: [],
-      errors: undefined,
-      messages: undefined,
-      showMessages: false,
-      showErrors: false,
-      isLogged: localStorage.getItem('token') !== 'undefined' && localStorage.getItem('token') !== null
-    };
 
-    this.handleProductSubmit = this.handleProductSubmit.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
-    this.changeLoggedInStatus = this.changeLoggedInStatus.bind(this);
-  }
+    constructor(props){
+        super(props);
+        this.state = {
+            products: [] ,
+            errors: undefined, 
+            messages: undefined,
+            showMessages: false,
+            showErrors: false,
+            isLogged: localStorage.getItem('token') !== 'undefined' && localStorage.getItem('token') !== null
+        };
 
-  render() {
+      this.handleProductSubmit=this.handleProductSubmit.bind(this);
+      this.handleLogout=this.handleLogout.bind(this);
+      this.changeLoggedInStatus=this.changeLoggedInStatus.bind(this);
+    }
+   
+    render () {
+      
+      //   console.log(this.state.isLogged);
+        return (
+        <div className="containr">
+          <div className="navBar">
+             {
+               localStorage.getItem('token') !== 'undefined' && localStorage.getItem('token') !== null  ? 
+          
+           <nav className="navigBar">
+                <ul className="navUl">
+                <li className="liNav"><Link style={{ textDecoration: 'none'}} to='/'>Home</Link></li>
+                <li className="liNav"><Link vto='/products'>All Products</Link></li>
+                <li className="liNav" ><Link style={{ textDecoration: 'none'}} to='/cart'>Cart</Link></li>
+                <li className="liNav" ><Link style={{ textDecoration: 'none'}} to='/logout'>Logout</Link></li>
+                </ul>
+                </nav> 
+                :
+                <nav className="navigBar">
+                <ul id="navUl">
+                <li className="liNav "><Link style={{ textDecoration: 'none'}} to='/'>Home</Link></li>
+                <li className="liNav "><Link style={{ textDecoration: 'none'}}to='/products'>All Products</Link></li>
+                <li className="liNav " ><Link style={{ textDecoration: 'none'}} to='/cart'>Cart</Link></li>
+                <li className="liNav" ><Link style={{ textDecoration: 'none'}} to='/register'>Register</Link></li>
+                <li className="liNav " ><Link style={{ textDecoration: 'none'}} to='/login'>Login</Link></li>
+                <li className="liNav " ><Link style={{ textDecoration: 'none'}} to='/contact'>Contact</Link></li>
+                </ul>
+           </nav>
+            
+          }
+              </div>
+              <div className="container">
+        <Route path="/create" render={props => (<ProductFormContainer {...props} handleProductSubmit = {this.handleProductSubmit} />)} />
+        <Route exact path="/register" render={(props) => ( this.state.isLogged ? ( <Redirect to="/"/>) : ( <RegisterFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus}/>) )}/>
+        <Route exact path="/login" render={(props) => ( this.state.isLogged ? ( <Redirect to="/"/>) : ( <LoginFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus}/>) )}/>
+        <Route exact path="/logout"  render={props => (<Logout {...props} changeLoggedInStatus={this.state.changeLoggedInStatus} handleLogout = {this.handleLogout} />)} />
+        <Route path = '/products' component={Auth.notLogged(ProductListContainer)}/>
+        <Route exact path="/contact" component={ContactContainer}/>
+        <Route exact path="/orders" component={OrderListContainer}/>
+        <Route exact path="/cart" component={CartContainer}/>
+        <Route exact path = '/' component={ProductListContainer}/>
+       
 
-    //   console.log(this.state.isLogged);
-    return (
-      <div>
-        <Header />
-
-        <Route path="/create" render={props => (<ProductFormContainer {...props} handleProductSubmit={this.handleProductSubmit} />)} />
-        <Route exact path="/register" render={(props) => (this.state.isLogged ? (<Redirect to="/" />) : (<RegisterFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus} />))} />
-        <Route exact path="/login" render={(props) => (this.state.isLogged ? (<Redirect to="/" />) : (<LoginFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus} />))} />
-        <Route exact path="/logout" render={props => (<Logout {...props} changeLoggedInStatus={this.state.changeLoggedInStatus} handleLogout={this.handleLogout} />)} />
-        <Route path='/products' component={Auth.notLogged(ProductListContainer)} />
-        <Route exact path="/contact" component={ContactContainer} />
-        <Route exact path="/orders" component={OrderListContainer} />
-        <Route exact path="/cart" component={CartContainer} />
-
-
-        <CSSTransition in={this.state.showErrors} timeout={1000}
-          unmountOnExit classNames="messages">
-          <div>
+         <CSSTransition in={this.state.showErrors} timeout={1000} 
+        unmountOnExit classNames="messages">
+          <div>  
             <div className="errors">{this.state.errors}</div>
           </div>
         </CSSTransition>
@@ -65,14 +92,15 @@ class OnlineShop extends Component {
             <div className="messages">{this.state.messages}</div>
           </div>
         </CSSTransition>
-        {/* <Footer /> */}
-      </div>
+        </div>
+        <Footer />
+    </div>
+       
+        )
+    }
 
-    )
-  }
-
-  handleProductSubmit(newProduct) {
-    axios.post(this.props.url, newProduct)
+     handleProductSubmit(newProduct) {
+        axios.post(this.props.url, newProduct)
       .then(({ data: product }) => {
         this.setState(prevState => ({
           products: [
