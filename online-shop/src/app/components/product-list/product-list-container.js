@@ -127,7 +127,9 @@ class ProductListContainer extends React.Component {
        else{
            this.setState({msg:"Item is added to cart"});
           let newCart=JSON.parse(localStorage.getItem('cart'));
-           newCart.products.push(res.data);
+          if(!newCart.products.find(x => x._id===id)){
+            newCart.products.push(res.data);
+          }
            newCart.totalPrice+=res.data.price;
            newCart.totalQuantity+=1;
            localStorage.setItem('cart',JSON.stringify(newCart));
