@@ -1,5 +1,5 @@
-import React ,{ Component } from 'react';
-import { Route,Redirect, Link ,NavLink} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Route, Redirect, Link, NavLink } from 'react-router-dom';
 
 import axios from 'axios';
 import { CSSTransition } from 'react-transition-group';
@@ -10,115 +10,86 @@ import RegisterFormContainer from './components/register-form/register-form-cont
 import LoginFormContainer from './components/login/login-form-container';
 import Logout from './components/logout/logout'
 import ContactContainer from './components/contact/contactContainer';
-<<<<<<< HEAD
-=======
 import CartContainer from './components/cart/cartContainer';
+import Header from './components/header.js';
 
-import Footer from './components/footer/footer.js'
+// import Footer from './components/footer/footer.js'
 
 
->>>>>>> f54d182be524eb9069aea359715c380f9ec38bbd
 import ProductListContainer from './components/product-list/product-list-container.js';
 import OrderListContainer from './components/order-list/order-list-container.js';
 
 class OnlineShop extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            products: [] ,
-            errors: undefined, 
-            messages: undefined,
-            showMessages: false,
-            showErrors: false,
-            isLogged: localStorage.getItem('token') !== 'undefined' && localStorage.getItem('token') !== null
-        };
+  constructor(props) {
+    super(props);
+    this.state = {
+      products: [],
+      errors: undefined,
+      messages: undefined,
+      showMessages: false,
+      showErrors: false,
+      isLogged: localStorage.getItem('token') !== 'undefined' && localStorage.getItem('token') !== null
+    };
 
-      this.handleProductSubmit=this.handleProductSubmit.bind(this);
-      this.handleLogout=this.handleLogout.bind(this);
-      this.changeLoggedInStatus=this.changeLoggedInStatus.bind(this);
-    }
-   
-    render () {
-      
-      //   console.log(this.state.isLogged);
-        return (
-        <div>
-          <div className="navbar-nav">
-             {
-               localStorage.getItem('token') !== 'undefined' && localStorage.getItem('token') !== null  ? 
-          
-           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <ul id="main-menu">
-                <li className="nav-item"><Link to='/'>Home</Link></li>
-                <li className="nav-item"><Link to='/products'>All Products</Link></li>
-                <li className="nav-item" ><Link to='/cart'>Cart</Link></li>
-                <li className="nav-item" ><Link to='/logout'>Logout</Link></li>
-                </ul>
-                </nav> 
-                :
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <ul id="main-menu">
-                <li className="nav-item"><Link to='/'>Home</Link></li>
-                <li className="nav-item"><Link to='/products'>All Products</Link></li>
-                <li className="nav-item" ><Link to='/cart'>Cart</Link></li>
-                <li className="nav-item" ><Link to='/register'>Register</Link></li>
-                <li className="nav-item" ><Link to='/login'>Login</Link></li>
-                <li className="nav-item" ><Link to='/contact'>Contact</Link></li>
-                </ul>
-           </nav>
-            
-          }
-              </div>
-        <Route path="/create" render={props => (<ProductFormContainer {...props} handleProductSubmit = {this.handleProductSubmit} />)} />
-        <Route exact path="/register" render={(props) => ( this.state.isLogged ? ( <Redirect to="/"/>) : ( <RegisterFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus}/>) )}/>
-        <Route exact path="/login" render={(props) => ( this.state.isLogged ? ( <Redirect to="/"/>) : ( <LoginFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus}/>) )}/>
-        <Route exact path="/logout"  render={props => (<Logout {...props} changeLoggedInStatus={this.state.changeLoggedInStatus} handleLogout = {this.handleLogout} />)} />
-        <Route path = '/products' component={Auth.notLogged(ProductListContainer)}/>
-        <Route exact path="/contact" component={ContactContainer}/>
-<<<<<<< HEAD
-        <Route exact path="/orders" component={OrderListContainer}/>
-=======
-        <Route exact path="/cart" component={CartContainer}/>
-       
->>>>>>> f54d182be524eb9069aea359715c380f9ec38bbd
+    this.handleProductSubmit = this.handleProductSubmit.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.changeLoggedInStatus = this.changeLoggedInStatus.bind(this);
+  }
 
-         <CSSTransition in={this.state.showErrors} timeout={1000} 
-        unmountOnExit classNames="messages">
-          <div>  
+  render() {
+
+    //   console.log(this.state.isLogged);
+    return (
+      <div>
+        <Header />
+
+        <Route path="/create" render={props => (<ProductFormContainer {...props} handleProductSubmit={this.handleProductSubmit} />)} />
+        <Route exact path="/register" render={(props) => (this.state.isLogged ? (<Redirect to="/" />) : (<RegisterFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus} />))} />
+        <Route exact path="/login" render={(props) => (this.state.isLogged ? (<Redirect to="/" />) : (<LoginFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus} />))} />
+        <Route exact path="/logout" render={props => (<Logout {...props} changeLoggedInStatus={this.state.changeLoggedInStatus} handleLogout={this.handleLogout} />)} />
+        <Route path='/products' component={Auth.notLogged(ProductListContainer)} />
+        <Route exact path="/contact" component={ContactContainer} />
+        <Route exact path="/orders" component={OrderListContainer} />
+        <Route exact path="/cart" component={CartContainer} />
+
+
+        <CSSTransition in={this.state.showErrors} timeout={1000}
+          unmountOnExit classNames="messages">
+          <div>
             <div className="errors">{this.state.errors}</div>
           </div>
-        </CSSTransition>  
-        <CSSTransition in={this.state.showMessages} timeout={1000} 
-        unmountOnExit classNames="messages">
-          <div> 
+        </CSSTransition>
+        <CSSTransition in={this.state.showMessages} timeout={1000}
+          unmountOnExit classNames="messages">
+          <div>
             <div className="messages">{this.state.messages}</div>
           </div>
         </CSSTransition>
-        <Footer />
-    </div>
-       
-        )
-    }
+        {/* <Footer /> */}
+      </div>
 
-     handleProductSubmit(newProduct) {
-        axios.post(this.props.url, newProduct)
+    )
+  }
+
+  handleProductSubmit(newProduct) {
+    axios.post(this.props.url, newProduct)
       .then(({ data: product }) => {
-       this.setState(prevState => ({
-      products: [
-        ...prevState.products,
-        { 
-          id: Date.now()+prevState.products.length,
-          title:product.title,
-          imagePath: product.url,
-          description: product.description,
-          price:Number(product.price)
-        }
-      ],
-       errors: undefined,
-      messages: `New post added: ${newProduct.title}`,
-      showMessages: true,
-      showErrors: false
-    }));
+        this.setState(prevState => ({
+          products: [
+            ...prevState.products,
+            {
+              id: Date.now() + prevState.products.length,
+              title: product.title,
+              imagePath: product.url,
+              description: product.description,
+              price: Number(product.price)
+            }
+          ],
+          errors: undefined,
+          messages: `New post added: ${newProduct.title}`,
+          showMessages: true,
+          showErrors: false
+        }));
       })
       .catch((err) => {
         if (err.response.data.errors) {
@@ -132,24 +103,24 @@ class OnlineShop extends Component {
         }
       }
       );
-    }
-  handleLogout(e){
-  e.preventDefault();
-   localStorage.removeItem("token");
-   this.changeLoggedInStatus(false);
   }
-  changeLoggedInStatus(param){
-   this.setState({isLogged:param})
+  handleLogout(e) {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    this.changeLoggedInStatus(false);
   }
-  componentDidMount(){
-    let cart ={};
-    cart.products=[];
-    cart.totalQuantity=0;
-    cart.totalPrice=0;
-    localStorage.setItem('cart',JSON.stringify(cart));
-   // console.log(JSON.parse(localStorage.getItem('cart')))
+  changeLoggedInStatus(param) {
+    this.setState({ isLogged: param })
   }
-    
+  componentDidMount() {
+    let cart = {};
+    cart.products = [];
+    cart.totalQuantity = 0;
+    cart.totalPrice = 0;
+    localStorage.setItem('cart', JSON.stringify(cart));
+    // console.log(JSON.parse(localStorage.getItem('cart')))
+  }
+
 }
 
 export default OnlineShop;
