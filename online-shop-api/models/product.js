@@ -18,6 +18,10 @@ const ProductSchema = new mongoose.Schema(
     price:{
         type:Number,
         required:[true,"Price is required"]
+    },
+    quantity:{
+        type:Number,
+        required:[true,"Quantity is required"]
     }
   }
 )
