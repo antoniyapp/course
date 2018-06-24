@@ -58,6 +58,16 @@ const ProductForm = ({
                 onChange={handleInputChange}
                 value={formState.price}
               />
+               <br />
+              <label>Quantity</label>
+              <br />
+              <input
+                type="text"
+                name="quantity"
+                placeholder="Quantity of the product"
+                onChange={handleInputChange}
+                value={formState.quantity}
+              />
               <button type="submit">{actionText}</button>
             </form>
           </section>

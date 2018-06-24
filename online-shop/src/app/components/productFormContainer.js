@@ -9,7 +9,8 @@ class ProductFormContainer extends Component {
     title: '',
     imagePath:'',
     description:'',
-    price:''
+    price:'',
+    quantity:''
   };
      this.handleInputChange=this.handleInputChange.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,7 +26,8 @@ class ProductFormContainer extends Component {
          title:this.state.title,
          imagePath:this.state.imagePath,
          description:this.state.description,
-         price:this.state.price
+         price:this.state.price,
+         quantity:this.state.quantity
      };
      this.props.handleProductSubmit(product);
 

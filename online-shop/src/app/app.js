@@ -9,6 +9,8 @@ import RegisterFormContainer from './components/register-form/register-form-cont
 import LoginFormContainer from './components/login/login-form-container';
 import Logout from './components/logout/logout'
 import ContactContainer from './components/contact/contactContainer';
+import CartContainer from './components/cart/cartContainer';
+
 
 import ProductListContainer from './components/product-list/product-list-container.js';
 
@@ -66,6 +68,8 @@ class OnlineShop extends Component {
         <Route exact path="/logout"  render={props => (<Logout {...props} changeLoggedInStatus={this.state.changeLoggedInStatus} handleLogout = {this.handleLogout} />)} />
         <Route path = '/products' component={ProductListContainer}/>
         <Route exact path="/contact" component={ContactContainer}/>
+        <Route exact path="/cart" component={CartContainer}/>
+       
 
          <CSSTransition in={this.state.showErrors} timeout={1000} 
         unmountOnExit classNames="messages">
@@ -124,6 +128,14 @@ class OnlineShop extends Component {
   }
   changeLoggedInStatus(param){
    this.setState({isLogged:param})
+  }
+  componentDidMount(){
+    let cart ={};
+    cart.products=[];
+    cart.totalQuantity=0;
+    cart.totalPrice=0;
+    localStorage.setItem('cart',JSON.stringify(cart));
+   // console.log(JSON.parse(localStorage.getItem('cart')))
   }
     
 }

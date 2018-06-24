@@ -18,7 +18,9 @@ class ListItem extends React.PureComponent{
             <div>
                 {item.isHovering && <h2>{item.title}</h2>}
             </div>
+            <div><button onClick={(e) => this.props.handleAddToCart(e,item._id)}>Add to Cart</button></div>
         </div>
+
     );}
 }
 export default ListItem; 

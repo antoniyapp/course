@@ -23,6 +23,7 @@ class ProductListContainer extends React.Component {
             curPage: 1,
             numPages: 1
         }
+        this.handleAddToCart=this.handleAddToCart.bind(this);
     };
 
     render() {
@@ -35,7 +36,7 @@ class ProductListContainer extends React.Component {
                         urlSearchParams={Paging.defaultSearchParam} />
                 </div>
                 <div>
-                    <ProductList items={this.filterItems()} toggleHoverState={this.toggleHoverState} />
+                    <ProductList items={this.filterItems()} toggleHoverState={this.toggleHoverState} handleAddToCart={this.handleAddToCart} />
                 </div>
                 <div>
                     <Paging.Component
@@ -114,6 +115,31 @@ class ProductListContainer extends React.Component {
             .sort(sortFunction(this.state.sort))
             .slice(itemsPerPage * (this.state.curPage - 1), itemsPerPage * this.state.curPage - 1);
     };
+
+    handleAddToCart(e,id){
+        e.preventDefault();
+        console.log('yes')
+      axios.get('http://localhost:3000/api/products/'+id)
+     .then((res) => {
+       if(res.data.quantity === 0) {
+           this.setState({msg:"No items available"});
+       }
+       else{
+           this.setState({msg:"Item is added to cart"});
+          let newCart=JSON.parse(localStorage.getItem('cart'));
+           newCart.products.push(res.data);
+           newCart.totalPrice+=res.data.price;
+           newCart.totalQuantity+=1;
+           localStorage.setItem('cart',JSON.stringify(newCart));
+          // this.props.addToCart(res.data);
+       }
+     })
+     .catch((err) =>{
+        if (err.response.data.errors) {
+            console.error("/api/products", err.response.data);
+        }
+    })
+    }
 
 };
 
