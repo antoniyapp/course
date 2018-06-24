@@ -37,7 +37,7 @@ class ProductFormContainer extends Component {
         <ProductForm
         handleInputChange={this.handleInputChange}
         formState={this.state}
-        title="Add product"
+        formTitle="Add product"
         handleSubmit={this.handleSubmit}
         actionText="Add"
       />    

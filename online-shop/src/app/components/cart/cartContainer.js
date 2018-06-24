@@ -41,18 +41,18 @@ class CartContainer extends Component {
      let cart=JSON.parse(localStorage.getItem('cart'));
         return (
            cart.products.length===0 ?
-          <div><p>Cart</p>
+          <div><h1>Cart</h1>
            <p>Cart is empty</p> 
            </div>
           :
             <div>
-          <p>Cart</p> 
+          <h1>Cart</h1> 
         <CartProductList
            items={cart.products}
          />  
          Total quantity: {cart.totalQuantity} <br/>
          Total price: {cart.totalPrice}<br/>
-         <button onClick={this.handleSubmit}>Buy</button>
+         <button className="btn-primary" onClick={this.handleSubmit}>Buy</button>
          </div>  
         )
       }

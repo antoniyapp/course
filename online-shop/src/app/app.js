@@ -42,33 +42,34 @@ class OnlineShop extends Component {
       
       //   console.log(this.state.isLogged);
         return (
-        <div>
-          <div className="navbar-nav">
+        <div className="containr">
+          <div className="navBar">
              {
                localStorage.getItem('token') !== 'undefined' && localStorage.getItem('token') !== null  ? 
           
-           <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <ul id="main-menu">
-                <li className="nav-item"><Link to='/'>Home</Link></li>
-                <li className="nav-item"><Link to='/products'>All Products</Link></li>
-                <li className="nav-item" ><Link to='/cart'>Cart</Link></li>
-                <li className="nav-item" ><Link to='/logout'>Logout</Link></li>
+           <nav className="navigBar">
+                <ul className="navUl">
+                <li className="liNav"><Link style={{ textDecoration: 'none'}} to='/'>Home</Link></li>
+                <li className="liNav"><Link vto='/products'>All Products</Link></li>
+                <li className="liNav" ><Link style={{ textDecoration: 'none'}} to='/cart'>Cart</Link></li>
+                <li className="liNav" ><Link style={{ textDecoration: 'none'}} to='/logout'>Logout</Link></li>
                 </ul>
                 </nav> 
                 :
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <ul id="main-menu">
-                <li className="nav-item"><Link to='/'>Home</Link></li>
-                <li className="nav-item"><Link to='/products'>All Products</Link></li>
-                <li className="nav-item" ><Link to='/cart'>Cart</Link></li>
-                <li className="nav-item" ><Link to='/register'>Register</Link></li>
-                <li className="nav-item" ><Link to='/login'>Login</Link></li>
-                <li className="nav-item" ><Link to='/contact'>Contact</Link></li>
+                <nav className="navigBar">
+                <ul id="navUl">
+                <li className="liNav "><Link style={{ textDecoration: 'none'}} to='/'>Home</Link></li>
+                <li className="liNav "><Link style={{ textDecoration: 'none'}}to='/products'>All Products</Link></li>
+                <li className="liNav " ><Link style={{ textDecoration: 'none'}} to='/cart'>Cart</Link></li>
+                <li className="liNav" ><Link style={{ textDecoration: 'none'}} to='/register'>Register</Link></li>
+                <li className="liNav " ><Link style={{ textDecoration: 'none'}} to='/login'>Login</Link></li>
+                <li className="liNav " ><Link style={{ textDecoration: 'none'}} to='/contact'>Contact</Link></li>
                 </ul>
            </nav>
             
           }
               </div>
+              <div className="container">
         <Route path="/create" render={props => (<ProductFormContainer {...props} handleProductSubmit = {this.handleProductSubmit} />)} />
         <Route exact path="/register" render={(props) => ( this.state.isLogged ? ( <Redirect to="/"/>) : ( <RegisterFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus}/>) )}/>
         <Route exact path="/login" render={(props) => ( this.state.isLogged ? ( <Redirect to="/"/>) : ( <LoginFormContainer {...props} changeLoggedInStatus={this.state.changeLoggedInStatus}/>) )}/>
@@ -79,6 +80,7 @@ class OnlineShop extends Component {
         <Route exact path="/orders" component={OrderListContainer}/>
 =======
         <Route exact path="/cart" component={CartContainer}/>
+        <Route exact path = '/' component={ProductListContainer}/>
        
 >>>>>>> f54d182be524eb9069aea359715c380f9ec38bbd
 
@@ -94,6 +96,7 @@ class OnlineShop extends Component {
             <div className="messages">{this.state.messages}</div>
           </div>
         </CSSTransition>
+        </div>
         <Footer />
     </div>
        
