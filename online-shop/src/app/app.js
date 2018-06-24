@@ -11,6 +11,8 @@ import Logout from './components/logout/logout'
 import ContactContainer from './components/contact/contactContainer';
 import CartContainer from './components/cart/cartContainer';
 
+import Footer from './components/footer/footer.js'
+
 
 import ProductListContainer from './components/product-list/product-list-container.js';
 
@@ -83,6 +85,7 @@ class OnlineShop extends Component {
             <div className="messages">{this.state.messages}</div>
           </div>
         </CSSTransition>
+        <Footer />
     </div>
        
         )
