@@ -59,7 +59,7 @@ class ContactContainer extends Component {
         <ContactForm
         handleInputChange={this.handleInputChange}
         formState={this.state}
-        title="Send us a message"
+        formTitle="Send us a message"
         handleSubmit={this.handleSubmit}
         actionText="Send"
       />   

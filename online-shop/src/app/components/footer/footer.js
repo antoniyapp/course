@@ -3,22 +3,24 @@ import {Link } from 'react-router-dom';
 const Footer = () => {
     return (
   <div>     
-<footer className="footer navbar-fixed-bottom bg-light pt-4 mt-4">
-        <ul className="list-unstyled">
-          <li>
-            <Link to='/'>Home</Link>
+<footer className="footer sticky-footer-navbar bg-dark ">
+  <div className="container-fluid">
+        <ul className="list-unstyled list-inline  ">
+          <li className="list-inline-item">
+            <Link style={{ textDecoration: 'none'}} to='/'>Home</Link>
           </li>
-          <li>
-            <Link to='/products'>Products</Link>
+          <li className="list-inline-item">
+            <Link style={{ textDecoration: 'none'}} to='/products'>Products</Link>
           </li>
-          <li>
-           <Link to='/cart'>Cart</Link>
+          <li className="list-inline-item">
+           <Link style={{ textDecoration: 'none'}} to='/cart'>Cart</Link>
           </li>
-          <li>
-           <Link to='/contact'>Contact</Link>
+          <li className="list-inline-item">
+           <Link style={{ textDecoration: 'none'}} to='/contact'>Contact</Link>
           </li>
         </ul>
-  <div className="footer-copyright text-center py-3">© 2018 OnlineShop.com</div>
+  <div className="footer-copyright text-center py-3">© 2018 OnlineShop</div>
+  </div>
 </footer>
       </div>
 );

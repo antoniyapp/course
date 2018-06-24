@@ -57,8 +57,8 @@ const ContactForm = ({
                 placeholder="Contact price"
                 onChange={handleInputChange}
                 value={formState.message}
-              />
-              <button type="submit">{actionText}</button>
+              /> <br/>
+              <button className="btn-primary" type="submit">{actionText}</button>
             </form>
           </section>
         </div>

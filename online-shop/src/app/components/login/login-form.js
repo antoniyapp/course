@@ -15,6 +15,11 @@ const LoginForm = ({ form, errors, msg, handleOnSubmit, handleOnChange, handleOn
             />
             <div className = {errors.user === '' ? 'nv' : 'err'}>{errors.user}</div>
             </div> */}
+            <header>
+          <div className="wrapper">
+            <h1>Login</h1>
+          </div>
+        </header>
             <div>
             <input
                 type='text'
@@ -36,7 +41,7 @@ const LoginForm = ({ form, errors, msg, handleOnSubmit, handleOnChange, handleOn
             <div className = {errors.pass === '' ? 'nv' : 'err'}>{errors.pass}</div>
             </div>
             <div>
-                <button type='submit' > Log In </button>
+                <button className="btn-primary" type='submit' > Log In </button>
             </div>
         </div>
     </form>
