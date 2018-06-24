@@ -35,7 +35,6 @@ return(<div/>)
 }
 
 const NotLogged = (Component) => {
-    console.log('1');
     let token = localStorage.getItem('token');
     //Not logged
     if (token === undefined) return (props) => (<Component {...props} />);
@@ -50,7 +49,7 @@ const NotLogged = (Component) => {
         localStorage.removeItem('token');
         return (props) => (<Component {...props} />);
     }
-    
+
     //Expired token
     localStorage.removeItem('token');
     return (props) => (<Component {...props} />);

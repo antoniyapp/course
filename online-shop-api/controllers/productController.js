@@ -3,6 +3,7 @@ const Product = require("../models/product");
 const getProducts = async (req, res)  => {
   try {
     const products = await Product.find({});
+    // const response = {items: products, currentPage: 1, totalPages: 1 + Math.floor(products.length / 20)} 
     res.status(200).send(products);
   } catch (err) {
     return res.status(400).send({err: err.toString()});

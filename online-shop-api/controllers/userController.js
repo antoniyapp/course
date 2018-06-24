@@ -50,19 +50,22 @@ const updateUser = async (req, res) => {
 
 const loginUser = async (req,res) => {
   try{
-     let userId = req.body.userId;
+     const userEmail = req.body.email;
+
+     var query  = User.where({ email: userEmail });
       
       // check if the user exists
-		const user = await User.findOne(userId, (err, user) => {
+		const user = await query.findOne((err, user) => {
 			// if there's no user or the password is invalid
-			user.comparePassword(req.body.password,user.password,
+			user.comparePassword(req.body.password, user.password,
         function (err,isMatch) {
           if(isMatch){
 	         const token = signToken(user);
 			     res.json({success: true, message: "Token attached.", token})
           }
           else if(err){
-            return res.json({success: false, message: "Invalid pass."})
+            //pass
+            return res.json({success: false, message: "Invalid credentials."})
           }
           else {
             return res.json({success: false, message: "Invalid credentials."})

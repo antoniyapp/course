@@ -9,11 +9,10 @@ class ListItem extends React.PureComponent{
     
     render (){
         const item = this.props.item;
-        const toggleHoverState = this.props.toggleHoverState;
         return(
-        <div onMouseEnter={toggleHoverState} onMouseLeave={toggleHoverState}>
-            <div className={item.isHovering ? 'is-hover' : 'is-not-hover'} style={item.isHovering ? { opacity: 0.5 } : { opacity: 1 }}>
-                <img style={{ width: 210, height: 280 }} src={item.image} />
+        <div>
+            <div >
+                <img style={{ width: 210, height: 280 }} src={item.imagePath} />
             </div>
             <div>
                 {item.isHovering && <h2>{item.title}</h2>}

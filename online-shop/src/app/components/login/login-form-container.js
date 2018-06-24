@@ -36,11 +36,9 @@ class LoginFormContainer extends React.Component {
     handleOnSubmit = (e) => {
         e.preventDefault();
        
-        //if (this.hasErrors()) return;
-        this.postUser({email:this.state.email,password:this.state.pass});
-        let msg = '';
+       // if (this.hasErrors()) return;
+        let msg = this.postUser({email:this.state.email, password:this.state.pass});
         this.setState({ msg: msg })
-        console.log("yes");
     }
 
     hasErrors = () => {
@@ -53,7 +51,9 @@ class LoginFormContainer extends React.Component {
     postUser = (user) => {
      axios.post('http://localhost:3000/api/users/login', user)
       .then(({data}) => {
+          if(!data.token) {console.log(data); return}
       localStorage.setItem('token',data.token);
+      console.log(data)
        this.props.history.push('/');
       () => this.props.changeLoggedInStatus(true);
     })

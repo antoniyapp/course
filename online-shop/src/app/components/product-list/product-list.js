@@ -3,10 +3,10 @@ import React from 'react';
 import ProductListItem from './product-list-item.js';
 
 
-const ProductList = ({items, toggleHoverState}) => (
+const ProductList = ({items}) => (
 <div>
 <ul>
-{items.map( item => (<li key = {item._id}><ProductListItem item = {item} toggleHoverState = {toggleHoverState(item._id)}/></li>))}
+{items.map( item => (<li key = {item._id}><ProductListItem item = {item} /></li>))}
 </ul>
 </div>
 );

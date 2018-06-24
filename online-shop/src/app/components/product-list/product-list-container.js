@@ -12,13 +12,13 @@ const sortOptions = [
     { value: 'da', key: 'Date: Oldest first' }
 ];
 
-const itemsPerPage = 4;
+const itemsPerPage = 3;
 
 class ProductListContainer extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            items: [{ isHovering: false, _id: '1', price: 7, title: 'test', image: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' }],
+            items: [],
             sort: '',
             curPage: 1,
             numPages: 1
@@ -46,12 +46,12 @@ class ProductListContainer extends React.Component {
     };
 
     //list-item change state when hover over an item
-    toggleHoverState = (id) => {
-        return () => (
-            this.setState(prevState => (
-                { items: prevState.items.map(item => (item._id === id ? { ...item, isHovering: !item.isHovering } : item)) }
-            )));
-    };
+    // toggleHoverState = (id) => {
+    //     return () => (
+    //         this.setState(prevState => (
+    //             { items: prevState.items.map(item => (item._id === id ? { ...item, isHovering: !item.isHovering } : item)) }
+    //         )));
+    // };
 
     // get search params for paging and sort
     // and and update the state with these values
@@ -70,13 +70,14 @@ class ProductListContainer extends React.Component {
             //     page: this.state.curPage}
         )
             .then((res) => {
+                // items: res.data.map(x => ({ ...x, isHovering: false })),
                 this.setState({
-                    items: res.data.map(x => ({ ...x, isHovering: false })),
+                    items: res.data,                    
                     numPages: Math.floor(res.data.length / itemsPerPage) + 1
                 });
             })
             .catch((err) => {
-                if (err.response.data.errors) {
+                if (err) {
                     console.error("/api/products", err.response.data);
                 }
             });
@@ -98,9 +99,9 @@ class ProductListContainer extends React.Component {
 
         const sortFunction = (criteria) => {
             switch (criteria) {
-                case 'pa': return (x, y) => (x.price >= y.price ? x : y);
+                case 'pa': return (x, y) => (x.price <= y.price ? x : y);
                     break;
-                case 'pd': return (x, y) => (x.price <= y.price ? x : y);
+                case 'pd': return (x, y) => (x.price >= y.price ? x : y);
                     break;
                     // case 'dd' : return (x,y) => (x.price > y.price ? x : y);
                     // break;
@@ -112,7 +113,7 @@ class ProductListContainer extends React.Component {
 
         return this.state.items
             .sort(sortFunction(this.state.sort))
-            .slice(itemsPerPage * (this.state.curPage - 1), itemsPerPage * this.state.curPage - 1);
+            .slice(itemsPerPage * (this.state.curPage - 1), itemsPerPage * this.state.curPage );
     };
 
 };
