@@ -44,7 +44,7 @@ class RegisterFormContainer extends React.Component {
         this.setState({ msg: msg });
         let user={
          email:this.state.email,
-         password:this.state.email,
+         password:this.state.pass,
          type:'user',
          firstname:this.state.firstname,
          lastname:this.state.lastname,
