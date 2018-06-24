@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import CartProductList from './cart-product-list';
-
+import axios from 'axios';
 
 class CartContainer extends Component {
    constructor(props){
@@ -8,11 +8,13 @@ class CartContainer extends Component {
     this.state = {
     msg:''
   };
+  this.handleSubmit=this.handleSubmit.bind(this);
    }
 
    handleSubmit(e){
      e.preventDefault();
      let cart=localStorage.getItem('cart');
+     console.log('da');
      let orderToSubmit={
          products:cart.products,
          address:'Some address',
@@ -50,7 +52,7 @@ class CartContainer extends Component {
          />  
          Total quantity: {cart.totalQuantity} <br/>
          Total price: {cart.totalPrice}<br/>
-         <button onSubmit={this.handleSubmit}>Submit</button>
+         <button onClick={this.handleSubmit}>Buy</button>
          </div>  
         )
       }
