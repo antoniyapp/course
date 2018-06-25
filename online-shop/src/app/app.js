@@ -6,6 +6,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import ProductContainer from './components/product/product-container.js';
 import ProductFormContainer from './components/productFormContainer';
+
 import RegisterFormContainer from './components/register-form/register-form-container';
 import LoginFormContainer from './components/login/login-form-container';
 import Logout from './components/logout/logout'
@@ -20,6 +21,7 @@ import OrderListContainer from './components/order-list/order-list-container.js'
 
 
 class OnlineShop extends Component {
+
 
   constructor(props) {
     super(props);
@@ -74,6 +76,7 @@ class OnlineShop extends Component {
       </div>
 
     )
+
   }
 
 

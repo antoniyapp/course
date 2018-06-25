@@ -7,7 +7,7 @@ const productRouter = require("./routes/productsRoutes");
 const userRouter = require("./routes/userRoutes");
 const orderRouter = require("./routes/ordersRoutes");
 const contactFormRouter = require("./routes/contactFormRoutes");
-
+const discountRouter = require("./routes/discountsRoutes");
 
 const app = express();
 
@@ -16,6 +16,7 @@ app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/contact", contactFormRouter);
+app.use("/api/discounts", discountRouter);
 
 /// catch 404 and forwarding to error handler
 app.use(function (req, res, next) {

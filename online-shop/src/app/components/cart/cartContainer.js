@@ -23,7 +23,7 @@ class CartContainer extends Component {
      }
      axios.post('http://localhost:3000/api/orders', orderToSubmit)
       .then(({data}) => {
-        console.log("Order is submitted")
+        console.log("Order is submitted");
     })
        .catch((err) => {
         if (err.response.data.errors) {
@@ -40,18 +40,20 @@ class CartContainer extends Component {
      let cart=JSON.parse(localStorage.getItem('cart'));
         return (
            cart.products.length===0 ?
-          <div><h1>Cart</h1>
-           <p>Cart is empty</p> 
+          <div className="cartContainer"><h1>Cart</h1>
+           <p className="total">Cart is empty</p> 
            </div>
           :
-            <div>
+            <div className="cartContainer">
           <h1>Cart</h1> 
         <CartProductList
            items={cart.products}
          />  
-         Total quantity: {cart.totalQuantity} <br/>
-         Total price: {cart.totalPrice}<br/>
+         <div className="totalWrapper listCart">
+         <div className='total'>Total quantity: {cart.totalQuantity}</div>
+         <div className='total'>Total price: {cart.totalPrice}</div>
          <button className="btn-primary" onClick={this.handleSubmit}>Buy</button>
+         </div>
          </div>  
         )
       }

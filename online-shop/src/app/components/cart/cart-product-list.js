@@ -4,7 +4,7 @@ import CartListItem from './cart-list-item';
 
 
 const CartProductList = ({items}) => (
-<div>
+<div className="listCart">
 <ul>
 {items.map( item => ( <li key = {item._id}> <CartListItem item = {item} /> </li>))}
 </ul>
