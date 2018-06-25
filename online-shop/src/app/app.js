@@ -5,7 +5,7 @@ import axios from 'axios';
 import { CSSTransition } from 'react-transition-group';
 
 import Auth from './components/helpers/authorization.js';
-import ProductFormContainer from './components/productFormContainer';
+import ProductFormContainer from './components/product-form/productFormContainer';
 import RegisterFormContainer from './components/register-form/register-form-container';
 import LoginFormContainer from './components/login/login-form-container';
 import Logout from './components/logout/logout'
@@ -49,7 +49,7 @@ class OnlineShop extends Component {
            <nav className="navigBar">
                 <ul className="navUl">
                 <li className="liNav"><Link style={{ textDecoration: 'none'}} to='/'>Home</Link></li>
-                <li className="liNav"><Link vto='/products'>All Products</Link></li>
+                <li className="liNav"><Link to='/products'>All Products</Link></li>
                 <li className="liNav" ><Link style={{ textDecoration: 'none'}} to='/cart'>Cart</Link></li>
                 <li className="liNav" ><Link style={{ textDecoration: 'none'}} to='/logout'>Logout</Link></li>
                 </ul>
@@ -93,7 +93,7 @@ class OnlineShop extends Component {
           </div>
         </CSSTransition>
         </div>
-        <Footer />
+     
     </div>
        
         )

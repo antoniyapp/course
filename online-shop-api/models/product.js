@@ -5,8 +5,8 @@ const ProductSchema = new mongoose.Schema(
     {
         title: {
         type: String,
-        required:true,
-        trim:[true,"Title is required"]
+        required:[true,"Title is required"],
+        trim:true
     },
     imagePath: {
         type: String,
