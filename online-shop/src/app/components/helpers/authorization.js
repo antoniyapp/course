@@ -45,7 +45,7 @@ export const withAuthorizationHOC = (role, Component) => {
     const obj = getToken();
 
     if(role !== 'anonymous' && obj.role === 'anonymous') { localStorage.setItem('token','s'); return (() => <Redirect to = '/login'/>);}
-    if(role !== obj.role) return ( () => <Redirect to = '/'/>)
+    if(role !== obj.role && obj.role !== 'admin') return ( () => <Redirect to = '/'/>)
     
     return ( props => <Component {...obj} {...props} />);
 
