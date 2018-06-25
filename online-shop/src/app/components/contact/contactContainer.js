@@ -71,4 +71,4 @@ class ContactContainer extends Component {
 
 }
 
-export default withAuthorizationHOC('user',ContactContainer);
+export default ContactContainer;

@@ -11,14 +11,26 @@ const Header = ({role}) => (
             style={{ width: '240px', height: '240px', maxWidth: '500px', display: 'block', 'marginLeft': 'auto', 'marginRight': 'auto' }}
         />
         <br /><br />
+        {
+            localStorage.getItem('token') !== 'undefined' && localStorage.getItem('token') !== null ?
         <ul className='row justify-content-center' id="main-menu">
+            <li className='col-sm' style={{ fontFamily: 'monospace', fontSize: '1.6rem', textAlign: 'center' }}><Link to='/products'>Shop</Link></li>
+            <li className='col-sm' style={{ fontFamily: 'monospace', fontSize: '1.6rem', textAlign: 'center' }}><Link to='/contact'>Contact</Link></li>
+            <li className='col-sm' style={{ fontFamily: 'monospace', fontSize: '1.6rem', textAlign: 'center' }}><Link to='/cart'>About</Link></li>
+            <li className='col-sm' style={{ fontFamily: 'monospace', fontSize: '1.6rem', textAlign: 'center' }}><Link to='/logout'>Logout</Link></li>
+            <li className='col-sm' style={{ fontFamily: 'monospace', fontSize: '1.6rem', textAlign: 'center' }}><Link to='/cart'>Cart</Link></li>
+        </ul> 
+        :
+         <ul className='row justify-content-center' id="main-menu">
             <li className='col-sm' style={{ fontFamily: 'monospace', fontSize: '1.6rem', textAlign: 'center' }}><Link to='/products'>Shop</Link></li>
             <li className='col-sm' style={{ fontFamily: 'monospace', fontSize: '1.6rem', textAlign: 'center' }}><Link to='/contact'>Contact</Link></li>
             <li className='col-sm' style={{ fontFamily: 'monospace', fontSize: '1.6rem', textAlign: 'center' }}><Link to='/cart'>About</Link></li>
             <li className='col-sm' style={{ fontFamily: 'monospace', fontSize: '1.6rem', textAlign: 'center' }}>{role === 'anonymous' ? <Link to='/login'>Log in</Link> : <Link to='/user'>User</Link>}</li>
             <li className='col-sm' style={{ fontFamily: 'monospace', fontSize: '1.6rem', textAlign: 'center' }}><Link to='/cart'>Cart</Link></li>
+            <li className='col-sm' style={{ fontFamily: 'monospace', fontSize: '1.6rem', textAlign: 'center' }}><Link to='/register'>Register</Link></li>
         </ul>
-        <br /><br />
+        }
+        
     </div>
 );
 

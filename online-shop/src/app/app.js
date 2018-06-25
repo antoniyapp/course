@@ -50,7 +50,7 @@ class OnlineShop extends Component {
           {/* <Route path="/create" render={props => (<ProductFormContainer {...props} handleProductSubmit={this.handleProductSubmit} />)} /> */}
           <Route exact path="/register" component={RegisterFormContainer} />
           <Route exact path="/login" component={LoginFormContainer} />
-          <Route exact path="/logout" render={props => (<Logout {...props} changeLoggedInStatus={this.state.changeLoggedInStatus} handleLogout={this.handleLogout} />)} />
+          <Route exact path="/logout" render={props => (<Logout {...props}  handleLogout={this.handleLogout} />)} />
           <Route exact path='/products/:id' render={() => <ProductContainer handleAddToCart = {this.handleAddToCart}/>} />
           <Route exact path='/products' component={ProductListContainer} />
           <Route exact path="/contact" component={ContactContainer} />
@@ -157,7 +157,7 @@ class OnlineShop extends Component {
   handleLogout(e) {
     e.preventDefault();
     localStorage.removeItem("token");
-    this.changeLoggedInStatus(false);
+    // this.changeLoggedInStatus(false);
   };
 
   componentDidMount() {
