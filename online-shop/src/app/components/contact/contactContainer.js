@@ -4,6 +4,8 @@ import ContactForm from './contactForm';
 import ErrorMessage from '../errMess';
 import axios from 'axios';
 
+import {withAuthorizationHOC} from '../helpers/authorization.js'
+
 class ContactContainer extends Component {
    constructor(props){
      super(props)
@@ -69,4 +71,4 @@ class ContactContainer extends Component {
 
 }
 
-export default ContactContainer;
+export default withAuthorizationHOC('user',ContactContainer);

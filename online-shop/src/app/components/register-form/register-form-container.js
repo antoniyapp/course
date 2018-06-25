@@ -1,6 +1,9 @@
 import React from 'react';
 import RegisterForm from './register-form.js';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+
+import {withAuthorization} from '../helpers/authorization.js'
 
 
 class RegisterFormContainer extends React.Component {
@@ -23,7 +26,8 @@ class RegisterFormContainer extends React.Component {
     }
 
     render() {
-        return (<RegisterForm
+        return this.props.role !== 'anonymous' ? <Redirect to='/' /> :
+        (<RegisterForm
             form = {{ email: this.state.email, pass: this.state.pass, firstname:this.state.firstname ,lastname:this.state.lastname, address:this.state.address, phoneNumber:this.state.phoneNumber,passRepeat: this.state.passRepeat} }
             errors = {{ email: this.state.emailErr, pass: this.state.passErr, passRepeat: this.state.passRepeatErr} }
             handleOnBlur = {{ email: this.validateEmail, pass: this.validatePass, passRepeat: this.validatePassRepeat} }
@@ -69,10 +73,9 @@ class RegisterFormContainer extends React.Component {
       .then(({data}) => {
       localStorage.setItem('token',data.token);
        this.props.history.push('/');
-         () => this.props.changeLoggedInStatus(true);
        })
        .catch((err) => {
-          console.error(this.props.url, err);
+          console.error('http://localhost:3000/api/users/', err);
         });
       }
       
@@ -110,4 +113,4 @@ class RegisterFormContainer extends React.Component {
 
 };
 
-export default RegisterFormContainer;
+export default withAuthorization(RegisterFormContainer);
