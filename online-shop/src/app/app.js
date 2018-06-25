@@ -80,7 +80,7 @@ class OnlineShop extends Component {
 
   getCart = () => {
     let cart = localStorage.getItem('cart');
-    if (cart === undefined) {
+    if (cart === null) {
       cart = {
         products: [],
         totalQuantity: 0,

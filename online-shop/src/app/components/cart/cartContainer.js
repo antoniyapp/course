@@ -14,7 +14,6 @@ class CartContainer extends Component {
    handleSubmit(e){
      e.preventDefault();
      let cart=localStorage.getItem('cart');
-     console.log('da');
      let orderToSubmit={
          products:cart.products,
          address:'Some address',

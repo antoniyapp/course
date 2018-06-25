@@ -8,7 +8,7 @@ class ProductContainer extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            item: {  _id: '1', price: 7, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
+            item: {},
             quantity: 1,
             msg: ''
         };

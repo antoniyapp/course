@@ -10,23 +10,16 @@ const sortOptions = [
     { value: 'pd', key: 'Price: Highest first' },
 ];
 
-const itemsPerPage = 30;
+const itemsPerPage = 6;
 
 class ProductListContainer extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            items: [
-                {  _id: '1', price: 7, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
-                {  _id: '2', price: 8, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
-                {  _id: '3', price: 9, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
-                {  _id: '4', price: 10, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
-                {  _id: '5', price: 11, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
-                {  _id: '6', price: 12, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
-            ],
+            items: [],
             sort: '',
             curPage: 1,
-            numPages: 10
+            numPages: 1
         }
     };
 
@@ -84,7 +77,7 @@ class ProductListContainer extends React.Component {
             })
             .catch((err) => {
                 if (err) {
-                    console.error("/api/products", err.response.data);
+                    console.error("/api/products", err);
                 }
             });
     };

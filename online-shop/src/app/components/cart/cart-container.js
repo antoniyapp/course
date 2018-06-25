@@ -4,7 +4,7 @@ import axios from 'axios';
 const getItem = (id) =>
 {
     const item = {};
-    axios.get("/api/products" + id)
+    axios.get("/api/products/" + id)
             .then((res) => { item = res.body;})
             .catch((err) => {
                 if (err) {
