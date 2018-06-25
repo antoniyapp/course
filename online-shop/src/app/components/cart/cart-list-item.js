@@ -3,9 +3,17 @@ import React from 'react';
 const CartListItem = ({
   item
 }) => {
+
   return (
-    <div>
-        <p>Name: Title: {item.title} Quantity {item.quantity} Price {item.quantity*item.price}</p>
+  
+    <div className="listWrapper">
+          <img className="listImg" src={item.imagePath}/>
+       <div  className='listItem'>
+          <span>{item.title}</span>
+       </div> 
+        <div  className='listItem'>
+          <span>{item.price}</span>
+       </div>
       </div>
   );
 };

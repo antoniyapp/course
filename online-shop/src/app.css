@@ -30,3 +30,36 @@ footer{
   flex-direction: column;
   height: 100%;
 }
+.listImg{
+height:10%;
+width:10%;
+}
+.listItem{
+  padding: 5px;
+  display: inline-block;
+}
+
+.listWrapper {
+  border-bottom: 1px solid gray;
+  margin: 10px;
+  padding:5px;
+  width:60%;
+  left:10%;
+  position: relative;
+}
+.cartWreapper{
+ width:60%;
+}
+.total {
+  
+}
+.listCart {
+  display: inline-block;
+}
+
+.totalWrapper {
+  background: lightgray;
+  padding:30px;
+  position: relative;
+ bottom:50px;
+}
