@@ -8,36 +8,42 @@ import ProductList from './product-list.js';
 const sortOptions = [
     { value: 'pa', key: 'Price: Lowest first' },
     { value: 'pd', key: 'Price: Highest first' },
-    { value: 'dd', key: 'Date: Latest first' },
-    { value: 'da', key: 'Date: Oldest first' }
 ];
 
-const itemsPerPage = 3;
+const itemsPerPage = 30;
 
 class ProductListContainer extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            items: [{ isHovering: false, _id: '1', price: 7, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' }],
+            items: [
+                { isHovering: false, _id: '1', price: 7, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
+                { isHovering: false, _id: '2', price: 8, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
+                { isHovering: false, _id: '3', price: 9, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
+                { isHovering: false, _id: '4', price: 10, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
+                { isHovering: false, _id: '5', price: 11, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
+                { isHovering: false, _id: '6', price: 12, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
+            ],
             sort: '',
             curPage: 1,
-            numPages: 1
+            numPages: 10
         }
         this.handleAddToCart=this.handleAddToCart.bind(this);
     };
 
     render() {
         return (
-            <div className='container'>
-                <div className='float-right'>
+            <div className='container' style = {{padding: '20px'}}>
+            <div className = 'row' style = {{padding: '20px'}}>
                     <Sorting.Component
                         sort={this.state.sort}
                         options={sortOptions}
                         urlSearchParams={Paging.defaultSearchParam} />
                 </div>
-                <div>
-                    <ProductList items={this.filterItems()} toggleHoverState={this.toggleHoverState} handleAddToCart={this.handleAddToCart} />
-                </div>
+                <br/>
+
+                    <ProductList items={this.filterItems()} handleAddToCart={this.handleAddToCart} />
+
                 <div>
                     <Paging.Component
                         curPage={this.state.curPage}
@@ -100,13 +106,9 @@ class ProductListContainer extends React.Component {
 
         const sortFunction = (criteria) => {
             switch (criteria) {
-                case 'pa': return (x, y) => (x.price <= y.price ? x : y);
+                case 'pa': return (x, y) => (x.price-y.price);
                     break;
-                case 'pd': return (x, y) => (x.price >= y.price ? x : y);
-                    break;
-                    // case 'dd' : return (x,y) => (x.price > y.price ? x : y);
-                    // break;
-                    // case 'da' : return (x,y) => (x.price > y.price ? x : y);
+                case 'pd': return (x, y) => (y.price-x.price);
                     break;
                 default: return undefined;
             }

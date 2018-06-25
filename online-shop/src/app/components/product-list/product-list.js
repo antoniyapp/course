@@ -3,11 +3,11 @@ import React from 'react';
 import ProductListItem from './product-list-item.js';
 
 
-const ProductList = ({items, toggleHoverState,handleAddToCart}) => (
-<div>
-<ul>
-{items.map( item => (<li key = {item._id}><ProductListItem item = {item} toggleHoverState = {toggleHoverState(item._id) } handleAddToCart={handleAddToCart}/></li>))}
-</ul>
+const ProductList = ({items, handleAddToCart}) => (
+<div className = 'container justify-content-center' style = {{padding: '40px'}}>
+<div className = 'row '>
+{items.map( item => (<div className='col-sm' style = {{maxWidth:'280px'}} key = {item._id}><ProductListItem item = {item} handleAddToCart={handleAddToCart}/></div>))}
+</div>
 </div>
 );
 
