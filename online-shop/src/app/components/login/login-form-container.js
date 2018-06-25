@@ -2,6 +2,8 @@ import React from 'react';
 import LoginForm from './login-form.js';
 import axios from 'axios';
 
+import { Redirect } from 'react-router-dom';
+import { withAuthorization } from '../helpers/authorization.js'
 
 class LoginFormContainer extends React.Component {
     constructor(props) {
@@ -13,31 +15,32 @@ class LoginFormContainer extends React.Component {
             passErr: '',
             msg: ''
         };
-        this.handleOnChange=this.handleOnChange.bind(this);
-        this.handleOnSubmit=this.handleOnSubmit.bind(this);
+        this.handleOnChange = this.handleOnChange.bind(this);
+        this.handleOnSubmit = this.handleOnSubmit.bind(this);
     }
 
     render() {
-        console.log(this.props.match);
-        return (<LoginForm
-            form = {{ email: this.state.email, pass: this.state.pass }}
-            errors = {{ email: this.state.emailErr, pass: this.state.passErr }}
-            handleOnBlur = {{ email: this.validateEmail, pass: this.validatePass }}
-            msg = {this.state.msg}
-            handleOnChange = {this.handleOnChange}
-            handleOnSubmit = {this.handleOnSubmit} />);
+        return this.props.role !== 'anonymous' ? <Redirect to='/' /> :
+            (<LoginForm
+                form={{ email: this.state.email, pass: this.state.pass }}
+                errors={{ email: this.state.emailErr, pass: this.state.passErr }}
+                handleOnBlur={{ email: this.validateEmail, pass: this.validatePass }}
+                msg={this.state.msg}
+                handleOnChange={this.handleOnChange}
+                handleOnSubmit={this.handleOnSubmit} />);
     }
 
     handleOnChange = (attribute) => {
         return (e) => {
-            this.setState({ [attribute]: e.target.value }) };
+            this.setState({ [attribute]: e.target.value })
         };
+    };
 
     handleOnSubmit = (e) => {
         e.preventDefault();
-       
-       // if (this.hasErrors()) return;
-        let msg = this.postUser({email:this.state.email, password:this.state.pass});
+
+        // if (this.hasErrors()) return;
+        let msg = this.postUser({ email: this.state.email, password: this.state.pass });
         this.setState({ msg: msg })
     }
 
@@ -49,44 +52,44 @@ class LoginFormContainer extends React.Component {
     };
 
     postUser = (user) => {
-     axios.post('http://localhost:3000/api/users/login', user)
-      .then(({data}) => {
-          if(!data.token) {console.log(data); return}
-      localStorage.setItem('token',data.token);
-      console.log(data)
-       this.props.history.push('/');
-      () => this.props.changeLoggedInStatus(true);
-    })
-       .catch((err) => {
-        if (err.response.data.errors) {
-          this.setState({
-            msg: err.response.data.errors.reduce((errs, err) => errs + ' ' + err.message, '')
-          });
-          console.error(this.props.url, err.response.data);
-        }
-      }
-      );
+        axios.post('http://localhost:3000/api/users/login', user)
+            .then(({ data }) => {
+                if (!data.token) { console.log(data); return }
+                localStorage.setItem('token', data.token);
+                console.log(data)
+                this.props.history.push('/');
+                () => this.props.changeLoggedInStatus(true);
+            })
+            .catch((err) => {
+                if (err.response.data.errors) {
+                    this.setState({
+                        msg: err.response.data.errors.reduce((errs, err) => errs + ' ' + err.message, '')
+                    });
+                    console.error(this.props.url, err.response.data);
+                }
+            }
+            );
     }
 
-     
+
 
 
     validateEmail = () => {
         let err = '';
-        if(this.state.email === '') err = 'Please enter an email';
+        if (this.state.email === '') err = 'Please enter an email';
         //else if(email.length < 6) return 'The user name must be at least 6 characters long';
 
-        this.setState({'emailErr': err});
+        this.setState({ 'emailErr': err });
     };
 
     validatePass = () => {
         let err = '';
-        if(this.state.pass === '') err = 'Please enter a password';
+        if (this.state.pass === '') err = 'Please enter a password';
         else if (this.state.pass.length < 6) err = 'Invalid password';
-        
-        this.setState({'passErr': err});
+
+        this.setState({ 'passErr': err });
     };
 
 };
 
-export default LoginFormContainer;
+export default withAuthorization(LoginFormContainer);
