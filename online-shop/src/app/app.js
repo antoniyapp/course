@@ -4,7 +4,7 @@ import { Route, Redirect, Link, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { CSSTransition } from 'react-transition-group';
 
-
+import ProductContainer from './components/product/product-container.js';
 import ProductFormContainer from './components/productFormContainer';
 import RegisterFormContainer from './components/register-form/register-form-container';
 import LoginFormContainer from './components/login/login-form-container';
@@ -47,9 +47,10 @@ class OnlineShop extends Component {
         <div className="container">
           {/* <Route path="/create" render={props => (<ProductFormContainer {...props} handleProductSubmit={this.handleProductSubmit} />)} /> */}
           <Route exact path="/register" component={RegisterFormContainer} />
-          <Route exact path="/login" component={LoginFormContainer}/>
+          <Route exact path="/login" component={LoginFormContainer} />
           <Route exact path="/logout" render={props => (<Logout {...props} changeLoggedInStatus={this.state.changeLoggedInStatus} handleLogout={this.handleLogout} />)} />
-          <Route path='/products' component={ProductListContainer} />
+          <Route exact path='/products/:id' render={() => <ProductContainer handleAddToCart = {this.handleAddToCart}/>} />
+          <Route exact path='/products' component={ProductListContainer} />
           <Route exact path="/contact" component={ContactContainer} />
           <Route exact path="/orders" component={OrderListContainer} />
           <Route exact path="/cart" component={CartContainer} />
@@ -110,43 +111,45 @@ class OnlineShop extends Component {
   };
 
   loadCart = () => {
-    this.setState({...this.getCart()});
+    this.setState({ ...this.getCart() });
   }
 
- 
-  // handleProductSubmit(newProduct) {
-  //   axios.post(this.props.url, newProduct)
-  //     .then(({ data: product }) => {
-  //       this.setState(prevState => ({
-  //         products: [
-  //           ...prevState.products,
-  //           {
-  //             id: Date.now() + prevState.products.length,
-  //             title: product.title,
-  //             imagePath: product.url,
-  //             description: product.description,
-  //             price: Number(product.price)
-  //           }
-  //         ],
-  //         errors: undefined,
-  //         messages: `New post added: ${newProduct.title}`,
-  //         showMessages: true,
-  //         showErrors: false
-  //       }));
-  //     })
-  //     .catch((err) => {
-  //       if (err.response.data.errors) {
-  //         this.setState({
-  //           errors: err.response.data.errors.reduce((errs, err) => errs + ' ' + err.message, ''),
-  //           messages: undefined,
-  //           showMessages: false,
-  //           showErrors: true
-  //         });
-  //         console.error(this.props.url, err.response.data);
-  //       }
-  //     }
-  //     );
-  // }
+
+  handleAddToCart = (id, quantity) => {
+    let msg = '';
+    
+
+    axios.get('/api/products/' + id)
+      .then((res) => {
+        let cart = { ...this.state.cart };
+        const item = cart.products.find(x => x._id === id);
+
+        if (item) {
+          if (res.data.quantity < quantity || res.data.quantity < item.quantity + quantity) {
+            msg = 'There are only ' + res.data.quantity + ' items left'; return msg;
+          }
+          else {
+            cart = { ...cart, products: [...cart.products, { ...item, quantity: item.quantity + quantity }] };
+          }
+        }
+        else {
+          cart = { ...cart, products: [...cart.products, res.data] };
+        }
+        msg = "The item was added to cart";
+
+        cart.totalPrice += res.data.price * quantity;
+        cart.totalQuantity += quantity;
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        this.setState({ ...cart });
+      })
+      .catch((err) => {
+        if (err) {
+          console.error("/api/products", err);
+        }
+      })
+  };
+
 
   handleLogout(e) {
     e.preventDefault();

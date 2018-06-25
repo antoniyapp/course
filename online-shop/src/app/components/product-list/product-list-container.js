@@ -17,18 +17,17 @@ class ProductListContainer extends React.Component {
         super(props)
         this.state = {
             items: [
-                { isHovering: false, _id: '1', price: 7, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
-                { isHovering: false, _id: '2', price: 8, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
-                { isHovering: false, _id: '3', price: 9, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
-                { isHovering: false, _id: '4', price: 10, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
-                { isHovering: false, _id: '5', price: 11, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
-                { isHovering: false, _id: '6', price: 12, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
+                {  _id: '1', price: 7, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
+                {  _id: '2', price: 8, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
+                {  _id: '3', price: 9, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
+                {  _id: '4', price: 10, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
+                {  _id: '5', price: 11, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
+                {  _id: '6', price: 12, title: 'test', imagePath: 'https://www.stinkyfamily.com/wp-content/uploads/2018/04/WINGS_RED_STINKY_SOCKS-300x450.png' },
             ],
             sort: '',
             curPage: 1,
             numPages: 10
         }
-        this.handleAddToCart=this.handleAddToCart.bind(this);
     };
 
     render() {
@@ -42,7 +41,7 @@ class ProductListContainer extends React.Component {
                 </div>
                 <br/>
 
-                    <ProductList items={this.filterItems()} handleAddToCart={this.handleAddToCart} />
+                    <ProductList items={this.filterItems()} />
 
                 <div>
                     <Paging.Component
@@ -118,33 +117,6 @@ class ProductListContainer extends React.Component {
             .sort(sortFunction(this.state.sort))
             .slice(itemsPerPage * (this.state.curPage - 1), itemsPerPage * this.state.curPage );
     };
-
-    handleAddToCart(e,id){
-        e.preventDefault();
-        console.log('yes')
-      axios.get('http://localhost:3000/api/products/'+id)
-     .then((res) => {
-       if(res.data.quantity === 0) {
-           this.setState({msg:"No items available"});
-       }
-       else{
-           this.setState({msg:"Item is added to cart"});
-          let newCart=JSON.parse(localStorage.getItem('cart'));
-          if(!newCart.products.find(x => x._id===id)){
-            newCart.products.push(res.data);
-          }
-           newCart.totalPrice+=res.data.price;
-           newCart.totalQuantity+=1;
-           localStorage.setItem('cart',JSON.stringify(newCart));
-          // this.props.addToCart(res.data);
-       }
-     })
-     .catch((err) =>{
-        if (err.response.data.errors) {
-            console.error("/api/products", err.response.data);
-        }
-    })
-    }
 
 };
 
