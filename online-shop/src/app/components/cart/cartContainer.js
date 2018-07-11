@@ -9,6 +9,7 @@ class CartContainer extends Component {
     msg:''
   };
   this.handleSubmit=this.handleSubmit.bind(this);
+  this.removeFromCart=this.removeFromCart.bind(this);
    }
 
    handleSubmit(e){
@@ -36,8 +37,20 @@ class CartContainer extends Component {
       );
    }
 
+    removeFromCart(e,id) {
+         let cart = JSON.parse(localStorage.getItem('cart'));
+         let [item]=cart.products.filter(x=>x._id===id);
+         console.log(item);
+         let newProducts=cart.products.filter(x=>x._id!==id);
+         let newCart = {...cart,products:newProducts};
+         newCart.totalQuantity-=1;
+         newCart.totalPrice-=item.price;
+         localStorage.setItem('cart',JSON.stringify(newCart));
+    }
+
   render(){
      let cart=JSON.parse(localStorage.getItem('cart'));
+     console.log(cart);
         return (
            cart.products.length===0 ?
           <div className="cartContainer"><h1>Cart</h1>
@@ -48,6 +61,7 @@ class CartContainer extends Component {
           <h1>Cart</h1> 
         <CartProductList
            items={cart.products}
+           handleRemoveFromCart={this.removeFromCart}
          />  
          <div className="totalWrapper listCart">
          <div className='total'>Total quantity: {cart.totalQuantity}</div>

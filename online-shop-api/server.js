@@ -56,9 +56,9 @@ mongoose.connect(mongooseUrl, () => {
 });
 
 
-app.listen(9000, (err) => {
+app.listen(9001, (err) => {
   if (err) throw err;
-  console.log(`Server started on port 9000`);
+  console.log(`Server started on port 9001`);
 });
 
 module.exports = app;

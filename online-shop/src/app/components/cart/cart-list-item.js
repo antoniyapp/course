@@ -1,7 +1,8 @@
 import React from 'react';
 
 const CartListItem = ({
-  item
+  item,
+  handleRemoveFromCart
 }) => {
 
   return (
@@ -14,6 +15,7 @@ const CartListItem = ({
         <div  className='listItem'>
           <span>{item.price}</span>
        </div>
+       <button onClick={(e) => handleRemoveFromCart(e,item._id)}>Remove</button>
       </div>
   );
 };

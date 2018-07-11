@@ -31,7 +31,8 @@ class OnlineShop extends Component {
         products: [],
         totalQuantity: 0,
         totalPrice: 0
-      }
+      },
+      role:'anonymous'
     };
 
     // this.handleProductSubmit = this.handleProductSubmit.bind(this);
@@ -40,7 +41,6 @@ class OnlineShop extends Component {
   }
 
   render() {
-
     return (
       <div className="container">
 
@@ -120,13 +120,12 @@ class OnlineShop extends Component {
 
   handleAddToCart = (id, quantity) => {
     let msg = '';
-    
-
     axios.get('/api/products/' + id)
       .then((res) => {
-        let cart = { ...this.state.cart };
-        const item = cart.products.find(x => x._id === id);
-
+        let cart = { ...this.state.cart }; //cartata ot state-a
+       // console.log(cart);
+        const item = cart.products.find(x => x._id === id);//itema ot state-a
+       //console.log(item);
         if (item) {
           if (res.data.quantity < quantity || res.data.quantity < item.quantity + quantity) {
             msg = 'There are only ' + res.data.quantity + ' items left'; return msg;
@@ -138,13 +137,14 @@ class OnlineShop extends Component {
         else {
           cart = { ...cart, products: [...cart.products, res.data] };
         }
+        
         msg = "The item was added to cart";
-
+         
         cart.totalPrice += res.data.price * quantity;
         cart.totalQuantity += quantity;
-
+       // console.log(cart);
         localStorage.setItem('cart', JSON.stringify(cart));
-        this.setState({ ...cart });
+        this.setState({ cart:cart });
       })
       .catch((err) => {
         if (err) {
@@ -161,6 +161,7 @@ class OnlineShop extends Component {
   };
 
   componentDidMount() {
+    //localStorage.removeItem('cart');
     this.loadCart();
     // this.loadToken();
   };
