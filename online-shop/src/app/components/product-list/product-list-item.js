@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-class ListItem extends React.PureComponent {
+class ProductListItem extends React.PureComponent {
     constructor(props) {
         super(props);
 
@@ -26,4 +26,4 @@ class ListItem extends React.PureComponent {
         );
     }
 }
-export default ListItem; 
+export default ProductListItem; 

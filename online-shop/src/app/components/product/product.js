@@ -8,7 +8,7 @@ return(
 Desc: {item.description}
 price: {item.price}
 </span>
-<button onClick = {handleOnClick}> Add to Cart</button>
+<button onClick = {(e) => handleOnClick(e,item._id)}> Add to Cart</button>
 </div>
 );
 };

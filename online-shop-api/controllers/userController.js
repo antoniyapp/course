@@ -56,6 +56,7 @@ const loginUser = async (req,res) => {
       
       // check if the user exists
 		const user = await query.findOne((err, user) => {
+      if(user) {
 			// if there's no user or the password is invalid
 			user.comparePassword(req.body.password, user.password,
         function (err,isMatch) {
@@ -70,7 +71,12 @@ const loginUser = async (req,res) => {
           else {
             return res.json({success: false, message: "Invalid credentials."})
           }
-        })})
+        })}
+       else {
+          res.json({success: false, message: "Invalid credentials."});
+        }
+      })
+  
 		
   }
   catch(err){
